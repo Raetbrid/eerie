@@ -1,0 +1,79 @@
+{
+  "id": "eerie",
+  "title": "33ri3",
+  "description": "My Little Horror RPG",
+  "version": "1.1.0",
+  "compatibility": {
+    "minimum": "12",
+    "verified": "13"
+  },
+  "authors": [{ "name": "Ratbird" }],
+  "esmodules": ["module/eerie.mjs"],
+  "background": "systems/eerie/images/cover.webp",
+  "styles": ["styles/eerie.css"],
+  
+   "packs": [
+    {
+      "name": "conds",
+      "label": "Conds",
+      "path": "packs/conds",
+      "type": "Item"
+    },
+	{
+      "name": "tables",
+      "label": "Roll Tables",
+      "path": "packs/tables",
+      "type": "RollTable"
+    },
+	{
+      "name": "traits",
+      "label": "Traits",
+      "path": "packs/traits",
+      "type": "Item"
+    },
+	{
+      "name": "feats",
+      "label": "Feats",
+      "path": "packs/feats",
+      "type": "Item"
+    }
+  ],
+  
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    },
+    {
+      "lang": "ru",
+      "name": "Русский",
+      "path": "lang/ru.json"
+    }
+  ],
+  "documentTypes": {
+    "Actor": {
+      "character": {
+        "label": "Character",
+        "labelPlural": "Characters"
+      },
+      "npc": {
+        "label": "NPC",
+        "labelPlural": "NPCs"
+      }
+    },
+    "Item": {
+      "feat": { "label": "Feat" },
+      "trait": { "label": "Trait" },
+      "bodyCondition": { "label": "Body Condition" },
+      "mindCondition": { "label": "Mind Condition" }
+    }
+  },
+  "initiative": "1d20",
+  "grid": { "distance": 5, "units": "m" },
+  "primaryTokenAttribute": "attributes.hp",
+  "secondaryTokenAttribute": "attributes.mp"
+  
+  "manifest": "https://raw.githubusercontent.com/[USER]/[REPO]/main/system.json",
+  "download": "https://github.com/[USER]/[REPO]/releases/download/v1.0.0/my-system.zip"
+}

@@ -1,0 +1,19 @@
+{
+  "Actor": {
+    "types": ["character"],
+    "character": {
+      "will": 0, "body": 0, "mind": 0,
+      "willTemp": 0, "bodyTemp": 0, "mindTemp": 0,
+      "modifiers": { "minusOne": false, "disadvantage": false, "plusOne": false, "increased": false, "reduced": false },
+      "notes": ""
+    }
+  },
+  "Item": {
+    "types": ["trait", "feat", "bodyCondition", "mindCondition", "item"],
+    "trait": { "description": "", "category": "Body", "level": 1 },
+    "feat": { "description": "", "group": "Physical" },
+    "bodyCondition": { "description": "", "level": 1 },
+    "mindCondition": { "description": "", "level": 1 },
+    "item": { "description": "", "subType": "simple","weaponType": "none", "severity": 0, "count": { "value": 0, "max": 1 }, "dice": { "rank": "d6", "n": 1 } }
+  }
+}

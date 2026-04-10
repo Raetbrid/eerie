@@ -1,0 +1,176 @@
+<form class="{{cssClass}} custom-sheet" autocomplete="off">
+  <div class="sheet-main-wrapper">
+    <div class="sheet-content">
+      
+      <header class="sheet-header">
+        <div class="portrait-box"><img src="{{actor.img}}" data-edit="img" title="Portrait" /></div>
+        <div class="header-details">
+          <input name="name" type="text" value="{{actor.name}}" placeholder="Name" class="charname" />
+          <textarea name="system.details" placeholder={{localize "EERIE.Details"}}>{{system.details}}</textarea>
+          <textarea name="system.solace" placeholder={{localize "EERIE.Solace"}}>{{system.solace}}</textarea>
+          
+          <div class="trait-feat-row">
+            <div class="item-slot drop-zone item-create" data-type="trait">
+              <div class="slot-title">{{localize "EERIE.Trait"}}</div>
+              <div class="slot-content">
+                {{#each items}}{{#if (eq this.type "trait")}}
+                  <div class="item-wrapper text-item" data-item-id="{{this._id}}">
+                    <div class="item-header">
+					  <!-- ИКОНКА ДЛЯ ЧАТА -->
+					  <a class="item-chat" title="Send to Chat"><i class="fas fa-comment-dots"></i></a>
+                      <span class="item-name">{{localize this.name}}</span>
+                      <!-- ИСПОЛЬЗУЕМ @root.editMode ДЛЯ НАДЕЖНОСТИ -->
+                      {{#if @root.editMode}}<a class="item-delete" title="Delete">×</a>{{/if}}
+                    </div>
+                    <div class="item-description">{{{localize this.system.description}}}</div>
+                  </div>
+                {{/if}}{{/each}}
+              </div>
+            </div>
+            
+            <div class="item-slot drop-zone item-create" data-type="feat">
+              <div class="slot-title">{{localize "EERIE.Feat"}}</div>
+              <div class="slot-content">
+                {{#each items}}{{#if (eq this.type "feat")}}
+                  <div class="item-wrapper text-item" data-item-id="{{this._id}}">
+                    <div class="item-header">
+					  <!-- ИКОНКА ДЛЯ ЧАТА -->
+					  <a class="item-chat" title="Send to Chat"><i class="fas fa-comment-dots"></i></a>
+                      <span class="item-name">{{localize this.name}}</span>
+                      {{#if @root.editMode}}<a class="item-delete" title="Delete">×</a>{{/if}}
+                    </div>
+                    <div class="item-description">{{{localize this.system.description}}}</div>
+                  </div>
+                {{/if}}{{/each}}
+              </div>
+            </div>
+          </div>
+
+          <div class="quick-stats-row">
+            <div class="quick-stat">
+              <label data-stat="will">{{localize "EERIE.Will"}}</label>
+              {{#if editMode}}<input type="number" name="system.will" value="{{system.will}}" min="0" max="3" />
+              {{else}}<img class="stat-indicator" src="systems/eerie/assets/stat_{{system.willTemp}}-{{system.will}}.webp" data-stat-temp="willTemp" />{{/if}}
+            </div>
+            <div class="quick-stat">
+              <label class="rollable-stat" data-stat="body">{{localize "EERIE.Body"}}</label>
+              {{#if editMode}}<input type="number" name="system.body" value="{{system.body}}" min="0" max="3" />
+              {{else}}<img class="stat-indicator" src="systems/eerie/assets/stat_{{system.bodyTemp}}-{{system.body}}.webp" data-stat-temp="bodyTemp" />{{/if}}
+            </div>
+            <div class="quick-stat">
+              <label class="rollable-stat" data-stat="mind">{{localize "EERIE.Mind"}}</label>
+              {{#if editMode}}<input type="number" name="system.mind" value="{{system.mind}}" min="0" max="3" />
+              {{else}}<img class="stat-indicator" src="systems/eerie/assets/stat_{{system.mindTemp}}-{{system.mind}}.webp" data-stat-temp="mindTemp" />{{/if}}
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <section class="sheet-body">
+        
+        <!-- СТРАНИЦА 1 -->
+        <div class="tab" data-group="primary" data-tab="page1">
+          <div class="page-1-layout">
+            
+            <div class="conditions-column">
+              {{#times 3}}{{#if (lt this (length ../bodyConditions))}}{{#with (get ../bodyConditions this)}}
+              <div class="condition-box text-item" data-item-id="{{this._id}}">
+                <div class="item-header">
+				   <!-- ИКОНКА ДЛЯ ЧАТА -->
+					  <a class="item-chat" title="Send to Chat"><i class="fas fa-comment-dots"></i></a>
+                  <span class="item-name">{{localize this.name}}</span>
+                  <!-- ИСПОЛЬЗУЕМ @root.editMode -->
+                  {{#if @root.editMode}}<a class="item-delete" title="Delete">×</a>{{/if}}
+                </div>
+                <div class="item-description">{{{localize this.system.description}}}</div>
+              </div>{{/with}}{{else}}
+              <div class="condition-box empty item-create" data-type="bodyCondition">
+                <img src="systems/eerie/assets/body-condition-empty.webp" />
+              </div>{{/if}}{{/times}}
+            </div>
+
+            <div class="center-panel">
+              <div class="center-top">
+                <div class="checkbox-column">
+                  <label class="custom-checkbox cb-minus" title="-1"><input type="checkbox" name="system.modifiers.minusOne" {{checked system.modifiers.minusOne}} /></label>
+                  <label class="custom-checkbox cb-disadv" title="Disadv"><input type="checkbox" name="system.modifiers.disadvantage" {{checked system.modifiers.disadvantage}} /></label>
+                </div>
+                <div class="stat-box-image" data-stat-temp="willTemp"><img src="systems/eerie/assets/will-{{system.willTemp}}.webp" /></div>
+                <div class="checkbox-column">
+                  <label class="custom-checkbox cb-plus" title="+1"><input type="checkbox" name="system.modifiers.plusOne" {{checked system.modifiers.plusOne}} /></label>
+                  <div class="efficiency-group">
+                    <label class="eff-sub-box cb-inc" title="+ effect"><input type="checkbox" name="system.modifiers.increased" {{checked system.modifiers.increased}}></label>
+                    <label class="eff-sub-box cb-red" title="- effect"><input type="checkbox" name="system.modifiers.reduced" {{checked system.modifiers.reduced}}></label>
+                  </div>
+                </div>
+              </div>
+              <div class="center-bottom">
+                <div class="stat-group"><div class="stat-box-image" data-stat-temp="bodyTemp"><img src="systems/eerie/assets/body-{{system.bodyTemp}}.webp" /></div></div>
+                <div class="stat-group"><div class="stat-box-image" data-stat-temp="mindTemp"><img src="systems/eerie/assets/mind-{{system.mindTemp}}.webp" /></div></div>
+              </div>
+            </div>
+
+            <div class="conditions-column">
+              {{#times 3}}{{#if (lt this (length ../mindConditions))}}{{#with (get ../mindConditions this)}}
+              <div class="condition-box text-item" data-item-id="{{this._id}}">
+                <div class="item-header">
+				<!-- ИКОНКА ДЛЯ ЧАТА -->
+					  <a class="item-chat" title="Send to Chat"><i class="fas fa-comment-dots"></i></a>
+                  <span class="item-name">{{localize this.name}}</span>
+                  <!-- ИСПОЛЬЗУЕМ @root.editMode -->
+                  {{#if @root.editMode}}<a class="item-delete" title="Delete">×</a>{{/if}}
+                </div>
+                <div class="item-description">{{{localize this.system.description}}}</div>
+              </div>{{/with}}{{else}}
+              <div class="condition-box empty item-create" data-type="mindCondition">
+                <img src="systems/eerie/assets/mind-condition-empty.webp" />
+              </div>{{/if}}{{/times}}
+            </div>
+
+          </div>
+        </div>
+        
+        <!-- СТРАНИЦА 2 -->
+        <div class="tab" data-group="primary" data-tab="page2">
+          <div class="page-full inventory-tab-content">
+            <div class="inventory-header">
+              <h2>{{localize "EERIE.Items"}}</h2>
+              <a class="item-create plus-btn" data-type="item" title="Add Item">+</a>
+            </div>
+            <div class="inventory-list">
+              {{#each inventory}}
+              <div class="inventory-item item-wrapper" data-item-id="{{this._id}}">
+                <div class="item-name" title="Edit">{{this.name}}</div>
+				<!-- ИКОНКА ДЛЯ ЧАТА -->
+					  <a class="item-chat" title="Send to Chat"><i class="fas fa-comment-dots"></i></a>
+                {{#if (ne this.system.weaponType "none")}}<a class="weapon-roll-click" title="Attack"><i class="fas fa-dice-d20"></i></a>{{/if}}
+                <div class="item-resource-controls">
+                  {{#if (eq this.system.subType "count")}}<span class="resource-count-click" title="L-click +, R-click -">{{this.system.count.value}} / {{this.system.count.max}}</span>{{/if}}
+                  {{#if (eq this.system.subType "dice")}}<span class="resource-dice-click" title="Roll Resource">{{this.system.dice.rank}}</span>{{/if}}
+                </div>
+                <a class="item-delete" title="Delete">×</a>
+              </div>
+              {{/each}}
+            </div>
+          </div>
+        </div>
+        
+        <!-- СТРАНИЦА 3 -->
+        <div class="tab" data-group="primary" data-tab="page3">
+          <div class="page-full">
+            <textarea name="system.notes" placeholder="{{localize "EERIE.NotesHint"}}">{{system.notes}}</textarea>
+          </div>
+        </div>
+
+      </section>
+    </div>
+
+    <!-- ТАБЫ СПРАВА -->
+    <nav class="sheet-tabs tabs" data-group="primary">
+      <a class="toggle-edit-mode lock-sidebar-btn"><i class="fas fa-{{#if editMode}}lock-open{{else}}lock{{/if}}"></i></a>
+      <a class="item vertical-tab" data-tab="page1">{{localize "EERIE.StatsTab"}}</a>
+      <a class="item vertical-tab" data-tab="page2">{{localize "EERIE.InventoryTab"}}</a>
+      <a class="item vertical-tab" data-tab="page3">{{localize "EERIE.NotesTab"}}</a>
+    </nav>
+  </div>
+</form>
