@@ -2,11 +2,9 @@
 <header class="sheet-header">
     <img src="{{item.img}}" data-edit="img" height="100" width="100" />
     <h1 class="charname">
-        <!-- Показываем локализованное имя в заголовке -->
         <div class="display-name" style="font-size: 20px; font-weight: bold;">
             {{localize item.name}}
         </div>
-        <!-- Оставляем инпут для редактирования ключа (только для админа) -->
         <input name="name" type="text" value="{{item.name}}" style="font-size: 12px; color: gray;" />
     </h1>
 </header>
@@ -15,7 +13,6 @@
     <a class="item" data-tab="details">Tags & Resource</a>
   </nav>
   <section class="sheet-body">
-<!-- Вкладка Описания -->
     <div class="tab" data-group="primary" data-tab="description">
       <div class="item-edit-area">
         <label>Localization Key (Edit):</label>

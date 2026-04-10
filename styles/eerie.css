@@ -10,7 +10,6 @@
   font-family: 'TitleFont', sans-serif; 
 }
 
-/* ================= ГЛОБАЛЬНОЕ УДАЛЕНИЕ РАМОК НА ЛИСТЕ ================= */
 .eerie.sheet.actor input, 
 .eerie.sheet.actor textarea, 
 .eerie.sheet.actor .window-content, 
@@ -25,7 +24,6 @@
   outline: none !important;
 }
 
-/* ================= ГЕОМЕТРИЯ ОКНА ================= */
 .eerie.sheet.actor .window-content { background: none !important; padding: 0 !important; display: block !important; overflow-y: auto !important; scrollbar-gutter: stable; }
 
 .eerie.sheet.actor .custom-sheet {
@@ -36,7 +34,6 @@
 .eerie.sheet.actor .sheet-main-wrapper { display: flex; flex-direction: row; padding: 20px; gap: 10px; width: 900px; box-sizing: border-box; flex-wrap: nowrap; }
 .eerie.sheet.actor .sheet-content { flex: 0 0 830px; display: flex; flex-direction: column; gap: 10px; align-items: center; }
 
-/* ШАПКА */
 .eerie.sheet.actor .sheet-header { 
   background-image: url("/systems/eerie/assets/header-bg.webp"); background-size: 100% 100%; padding: 25px; 
   display: grid; grid-template-columns: 350px 1fr; gap: 15px; min-height: 350px; width: 100%;
@@ -46,7 +43,6 @@
 .eerie.sheet.actor .header-details { display: flex; flex-direction: column; max-height: 350px; justify-content: space-between; }
 .eerie.sheet.actor .charname { width: 100%; background: transparent; font-size: 28px; font-weight: bold; text-align: center; height: 75px; line-height: 75px; }
 
-/* Общие стили для текстовых полей в шапке */
 .eerie.sheet.actor .header-details textarea { 
   background: transparent; 
   resize: none; 
@@ -57,21 +53,19 @@
   white-space: pre-wrap; 
 }
 
-/* Конкретно для поля Details (1 строка) */
 .eerie.sheet.actor .header-details textarea[name="system.details"] {
   height: 40px;
   min-height: 40px;
-  overflow: hidden; /* Скрываем скролл, если текста мало */
+  overflow: hidden;
   font-style: italic;
 }
 
-/* Конкретно для поля Solace (2 строки) */
 .eerie.sheet.actor .header-details textarea[name="system.solace"] {
-  height: 70px;     /* Увеличили высоту для 2-х строк */
+  height: 70px;    
   min-height: 70px;
   font-weight: bold;
-  line-height: 1.1; /* Немного уменьшили межстрочный интервал, чтобы текст сидел плотнее */
-  overflow-y: auto; /* Позволяем скроллить, если текста очень много */
+  line-height: 1.1; 
+  overflow-y: auto; 
 }
 
 .quick-stats-row { display: flex; justify-content: space-around; align-items: center; width: 100%; padding: 5px 0; }
@@ -87,7 +81,6 @@
 .item-header { font-size: 18px; font-weight: bold; display: flex; gap: 10px; align-items: center; justify-content: center; width: 100%; }
 .item-description { font-size: 18px; text-align: center; line-height: 1.1; white-space: pre-wrap; overflow-y: auto; max-height: 65px; }
 
-/* НИЖНИЙ МОНОЛИТ */
 .condition-box .item-header span { font-family: 'TitleFont', sans-serif; font-size: 18px; }
 .condition-box .item-description { font-family: sans-serif; white-space: pre-wrap; }
 
@@ -103,7 +96,6 @@
 .center-bottom .stat-group { width: 220px; height: 220px; }
 .checkbox-column { display: flex; flex-direction: column; width: 110px; height: 220px; justify-content: space-between; }
 
-/* ЧЕКБОКСЫ (СПРАЙТЫ) */
 .custom-checkbox, .eff-sub-box { width: 110px; height: 110px; position: relative; cursor: pointer; background: transparent; }
 .custom-checkbox input, .eff-sub-box input { opacity: 0; position: absolute; width: 100%; height: 100%; cursor: pointer; z-index: 10; margin: 0; }
 .mod-icon { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: 0.2s; z-index: 1; }
@@ -123,7 +115,6 @@
 .efficiency-group { width: 110px; height: 110px; display: flex; flex-direction: column; }
 .eff-sub-box { height: 55px; width: 110px; }
 
-/* ТАБЫ И ЗАМОЧЕК */
 .sheet-tabs { flex: 0 0 40px; display: flex; flex-direction: column; gap: 5px; align-self: flex-start; }
 .lock-sidebar-btn { display: flex; align-items: center; justify-content: center; height: 40px; width: 40px; background: transparent; font-size: 20px; cursor: pointer; position: relative; right: 5px; }
 .vertical-tab { writing-mode: vertical-rl; transform: rotate(180deg); width: 40px; height: 120px; display: flex !important; align-items: center; justify-content: center; position: relative; transition: 0.2s; background-color: transparent !important; color: black; background-size: 100% 100% !important; background-repeat: no-repeat !important; }
@@ -134,7 +125,6 @@
 .vertical-tab[data-tab="page2"] { background-image: url("/systems/eerie/assets/tab-inventory-bg.webp") !important; }
 .vertical-tab[data-tab="page3"] { background-image: url("/systems/eerie/assets/tab-notes-bg.webp") !important; }
 
-/* ИНВЕНТАРЬ */
 .inventory-header { display: flex; justify-content: space-between; align-items: center; width: 780px; margin-bottom: 20px; padding: 0 10px; }
 .inventory-header h2 { margin: 0; }
 .inventory-header .item-create { font-size: 32px; cursor: pointer; text-decoration: none !important; }
@@ -146,7 +136,6 @@
 .weapon-roll-click { font-size: 24px; color: #555; cursor: pointer; margin-right: 15px; transition: color 0.2s; }
 .weapon-roll-click:hover { color: #555; }
 
-/* ЧАТ - ОБНОВЛЕННЫЙ БЛОК (БЕЗ ОБВОДКИ ТЕКСТА) */
 .eerie-roll-card { background: transparent; text-align: center; padding: 5px; width: 100%; }
 .eerie-roll-card .roll-result-body { 
   width: 100%; height: 145px; 
@@ -160,35 +149,31 @@
 
 .eerie-roll-card .result-number { font-size: 52px; font-weight: 900; color: #000; line-height: 1; margin-bottom: 5px; }
 
-/* ТЕКСТ РЕЗУЛЬТАТА (БЕЗ ТЕНЕЙ И ОБВОДОК) */
 .eerie-roll-card .result-text { 
   font-size: 18px; font-weight: bold; text-transform: uppercase; 
   margin-top: -5px; text-shadow: none; 
 }
 
 .eerie-roll-card .roll-dice-tray { display: flex !important; flex-direction: row !important; justify-content: center !important; gap: 8px; margin-top: 10px; width: 100%; }
-/* Рамки кубиков остаются */
+
 .eerie-roll-card .die { background: rgba(255,255,255,0.9); border: 1px solid #000 !important; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 14px; margin: 0 3px; }
 .eerie-roll-card .die.die-discarded { opacity: 0.2; filter: grayscale(1); text-decoration: line-through; }
 
-/* КРУЖОЧКИ ЭФФЕКТИВНОСТИ */
 .eff-dots-tray { display: flex; justify-content: center; gap: 6px; margin-top: 5px; height: 24px; }
 .eff-dot { font-size: 26px; color: #000; line-height: 1; text-shadow: 0 0 2px rgba(255, 255, 255, 0.5); }
 
-/* ЗАМЕТКИ */
 .eerie.sheet.actor .tab[data-tab="page3"] textarea { width: 780px; height: 400px; border: none; outline: none; padding: 30px; background-image: url("/systems/eerie/assets/notes-bg.webp"); background-size: 100% 100%; font-size: 22px; margin-left: 10px; }
 
 .rollable-stat:hover { color: white; text-shadow: 0 0 10px rgba(255, 255, 255, 1); }
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 2px; }
 
-/* Кнопка генератора в шапке окна */
 .eerie-header-generator {
-  color: #ffb6c1 !important; /* Твой розовый цвет для крита или любой другой */
+  color: #ffb6c1 !important;
 }
 
 .eerie-header-generator:hover {
-  color: #02e0c3 !important; /* Бирюзовый при наведении */
+  color: #02e0c3 !important;
   text-shadow: 0 0 5px #02e0c3;
 }
 
@@ -201,10 +186,8 @@
 }
 
 .item-chat:hover {
-  color: #02e0c3; /* Твой бирюзовый */
-}
+  color: #02e0c3;
 
-/* В листе предметов (инвентарь) тоже добавим отступ */
 .inventory-item .item-chat {
-  order: -1; /* Поставим иконку самой первой в строке */
+  order: -1;
 }

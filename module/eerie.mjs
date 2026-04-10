@@ -2,9 +2,8 @@ import { eerieCharacterSheet } from "./actor.mjs";
 import { eerieItemSheet } from "./item.mjs";
 
 Hooks.once('init', () => {
-  // === РЕГИСТРАЦИЯ НАСТРОЕК МИРА ===
   game.settings.register("eerie", "critRelief", {
-    name: "EERIE.SettingsCritReliefName", // Рекомендую использовать ключи и тут
+    name: "EERIE.SettingsCritReliefName",
     hint: "EERIE.SettingsCritReliefHint",
     scope: "world",
     config: true,
@@ -21,7 +20,6 @@ Hooks.once('init', () => {
     default: true
   });
 
-  // === РЕГИСТРАЦИЯ ЛИСТОВ ===
   Actors.unregisterSheet("core", ActorSheet);
   Actors.registerSheet("eerie", eerieCharacterSheet, { 
     makeDefault: true,
@@ -34,10 +32,9 @@ Hooks.once('init', () => {
     label: "EERIE.SheetItem"
   });
 
-  // === ХЕЛПЕРЫ HANDLEBARS ===
   Handlebars.registerHelper({
     eq: (a, b) => a === b,
-    ne: (a, b) => a !== b, // ДОБАВИЛИ ЭТОТ ХЕЛПЕР (нужен для оружия)
+    ne: (a, b) => a !== b,
     lt: (a, b) => a < b,
     add: (a, b) => Number(a) + Number(b),
     length: arr => Array.isArray(arr) ? arr.length : 0,

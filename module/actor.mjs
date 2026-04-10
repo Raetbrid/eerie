@@ -21,7 +21,7 @@ export class eerieCharacterSheet extends ActorSheet {
     buttons.unshift({
       label: game.i18n.localize("EERIE.HeaderGenerator"),
       class: "eerie-header-generator",
-      icon: "fas fa-wand-magic-sparkles", // Иконка волшебной палочки
+      icon: "fas fa-wand-magic-sparkles",
       onclick: ev => this._onGeneratorRoll(ev)
     });
 
@@ -94,7 +94,6 @@ export class eerieCharacterSheet extends ActorSheet {
     const type = event.currentTarget.dataset.type;
     if (!type) return;
 
-    // Логика для Trait и Feat (оставляем без изменений)
     if (type === "trait" || type === "feat") {
       if (this.actor.items.filter(i => i.type === type).length >= 1) return ui.notifications.warn("Already has one!");
       return type === "trait" ? this._showTraitPicker() : this._showFeatCategoryPicker();
@@ -102,12 +101,11 @@ export class eerieCharacterSheet extends ActorSheet {
 
     if (type === "item") return await this.actor.createEmbeddedDocuments("Item", [{ name: "New Item", type: "item" }]);
 
-    // --- ЛОГИКА ДЛЯ CONDITIONS ---
     const count = this.actor.items.filter(i => i.type === type).length;
     if (count >= 3) return ui.notifications.warn("Слоты заполнены");
     
     const targetLevel = count + 1;
-    const pack = game.packs.get("eerie.conds"); // Убедись, что ID верный (система.пак)
+    const pack = game.packs.get("eerie.conds");
     let itemData = null;
 
 	if (pack) {
@@ -117,20 +115,13 @@ export class eerieCharacterSheet extends ActorSheet {
       if (entry) {
         const doc = await pack.getDocument(entry._id);
         
-        // ВАЖНО: Мы берем "сырые" данные (source), 
-        // которые содержат КЛЮЧИ, а не готовый перевод.
         itemData = doc.toObject(); 
-
-        // УДАЛИ или ЗАКОММЕНТИРУЙ эти строки, если они у тебя есть:
-        // itemData.name = game.i18n.localize(doc.name); 
-        // itemData.system.description = game.i18n.localize(doc.system.description);
         
         console.log(`Eerie | В персонажа записан ключ: ${itemData.name}`);
       }
     }
 
     if (!itemData) {
-      // Если в паке ничего не нашли - создаем базовую пустышку
       itemData = { 
         name: `${type === "bodyCondition" ? "Body" : "Mind"} ${targetLevel}`, 
         type: type, 
@@ -153,12 +144,10 @@ export class eerieCharacterSheet extends ActorSheet {
     const pack = game.packs.get("eerie.traits");
     if (!pack) return ui.notifications.error("Пак Traits не найден!");
     
-    // Запрашиваем индекс с тегами
     const index = await pack.getIndex({fields: ["system.category", "system.level", "system.description"]});
     
     let listHtml = `<div style="max-height: 500px; overflow-y: auto;">`;
     for (let lvl = 1; lvl <= 3; lvl++) {
-      // Используем переменную category
       listHtml += `<div style="background:#222;color:#fff;padding:5px;font-weight:bold;margin-top:10px;">${category.toUpperCase()} LEVEL ${lvl}</div>`;
       
       const filtered = index.filter(e => e.system.category === category && Number(e.system.level) === lvl);
@@ -167,7 +156,6 @@ export class eerieCharacterSheet extends ActorSheet {
         listHtml += `<div style="font-size: 10px; padding: 5px;">Нет данных.</div>`;
       } else {
         filtered.forEach(i => {
-          // Локализация ключей
           const name = game.i18n.localize(i.name);
           const desc = game.i18n.localize(i.system.description || "");
 
@@ -221,7 +209,6 @@ export class eerieCharacterSheet extends ActorSheet {
       const filtered = index.filter(e => e.system.group === sub);
       
       filtered.forEach(i => {
-        // Локализация ключей
         const name = game.i18n.localize(i.name);
         const desc = game.i18n.localize(i.system.description || "");
 
@@ -283,7 +270,7 @@ export class eerieCharacterSheet extends ActorSheet {
 
     if (sixes >= 2) { 
       resT = game.i18n.format("EERIE.ChatCritical"); 
-      resC = "#006400"; // ТЕМНО-ЗЕЛЕНЫЙ ЦВЕТ
+      resC = "#006400";
       disp = "6&6"; resCl = "res-crit"; dotCount = 3;
       if (game.settings.get("eerie", "critRelief")) {
         let u = {}; if (this.actor.system.willTemp < this.actor.system.will) u["system.willTemp"] = this.actor.system.willTemp + 1;
@@ -364,11 +351,9 @@ export class eerieCharacterSheet extends ActorSheet {
 	async _onGeneratorRoll(event) {
     event.preventDefault();
 
-    // 1. Получаем доступ к системному паку таблиц
     const pack = game.packs.get("eerie.tables"); 
     if (!pack) return ui.notifications.error("Системный компендиум 'eerie.tables' не найден!");
 
-    // 2. Загружаем индекс пака
     await pack.getIndex();
     const detailsEntry = pack.index.find(e => e.name === "Details");
     const solaceEntry = pack.index.find(e => e.name === "Solace");
@@ -377,26 +362,21 @@ export class eerieCharacterSheet extends ActorSheet {
       return ui.notifications.error("В компендиуме не найдены таблицы 'Details' или 'Solace'!");
     }
 
-    // 3. Загружаем таблицы
     const detailsTable = await pack.getDocument(detailsEntry._id);
     const solaceTable = await pack.getDocument(solaceEntry._id);
 
-    // 4. Совершаем броски
     const drawDetails = await detailsTable.draw({ displayChat: false });
     const drawSolace = await solaceTable.draw({ displayChat: false });
 
     const resDetails = drawDetails.results[0];
     const resSolace = drawSolace.results[0];
 
-    // 5. ПОЛУЧАЕМ ДАННЫЕ (Стандарт v13)
-    // .name — это чистый текст результата (вместо старого .text)
-	
 	const cleanString = (str) => {
       return str
-        .replace(/<[^>]*>/g, "")      // Удаляет HTML теги <p> и др.
-        .replace(/[\n\r\t]/g, "")     // Удаляет переносы строк и табы
-        .replace(/&nbsp;/g, " ")      // Заменяет неразрывные пробелы на обычные
-        .trim();                      // Удаляет пробелы по краям
+        .replace(/<[^>]*>/g, "") 
+        .replace(/[\n\r\t]/g, "")
+        .replace(/&nbsp;/g, " ") 
+        .trim();                
     };
 
     const rawDetails = cleanString(resDetails.text || resDetails.name || "");
@@ -405,15 +385,12 @@ export class eerieCharacterSheet extends ActorSheet {
     const textDetails = game.i18n.localize(rawDetails);
     const textSolace = game.i18n.localize(rawSolace);
 
-    // .getHTML() — это асинхронный метод для красивого вывода в чат
     const htmlDetails = await resDetails.getHTML();
     const htmlSolace = await resSolace.getHTML();
 
-    // Логируем в консоль для проверки (нажми F12, если что-то не так)
     console.log("Eerie | Generated Details:", textDetails);
     console.log("Eerie | Generated Solace:", textSolace);
 
-    // 6. ОБНОВЛЯЕМ ПЕРСОНАЖА
     if (textDetails && textSolace) {
       await this.actor.update({
         "system.details": textDetails,
@@ -424,7 +401,6 @@ export class eerieCharacterSheet extends ActorSheet {
       return ui.notifications.error("Ошибка: Таблицы вернули пустой результат.");
     }
 
-    // 7. ПРОВЕРКА НАСТРОЙКИ ВЫВОДА В ЧАТ
     const shouldPostToChat = game.settings.get("eerie", "showPersonalityToChat");
 
     if (shouldPostToChat) {
@@ -457,7 +433,6 @@ export class eerieCharacterSheet extends ActorSheet {
     const item = this.actor.items.get(itemId);
     if (!item) return;
 
-    // Локализация перед отправкой
     const name = game.i18n.localize(item.name);
     const desc = game.i18n.localize(item.system.description);
 
