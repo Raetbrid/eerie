@@ -74,6 +74,6 @@
   "primaryTokenAttribute": "attributes.hp",
   "secondaryTokenAttribute": "attributes.mp",
   
-  "manifest": "https://github.com/Raetbrid/eerie/main/system.json",
+  "manifest": "https://raw.githubusercontent.com/Raetbrid/eerie/main/system.json",
   "download": "https://github.com/Raetbrid/eerie/releases/download/v1.1.0/eerie.zip"
 }
