@@ -41,7 +41,7 @@
 .portrait-box { width: 320px !important; height: 320px !important; overflow: hidden; }
 .portrait-box img { width: 100% !important; height: 100% !important; object-fit: cover !important; display: block; }
 .eerie.sheet.actor .header-details { display: flex; flex-direction: column; max-height: 350px; justify-content: space-between; }
-.eerie.sheet.actor .charname { width: 100%; background: transparent; font-size: 28px; font-weight: bold; text-align: center; height: 75px; line-height: 75px; }
+.eerie.sheet.actor .charname { width: 100%; background: transparent; font-size: 28px; font-weight: bold; text-align: center; height: 35px; line-height: 35px; }
 
 .eerie.sheet.actor .header-details textarea { 
   background: transparent; 
@@ -54,24 +54,24 @@
 }
 
 .eerie.sheet.actor .header-details textarea[name="system.details"] {
-  height: 40px;
-  min-height: 40px;
+  height: 25px;
+  min-height: 25px;
   overflow: hidden;
   font-style: italic;
 }
 
 .eerie.sheet.actor .header-details textarea[name="system.solace"] {
-  height: 70px;    
-  min-height: 70px;
+  height: 50px;    
+  min-height: 50px;
   font-weight: bold;
   line-height: 1.1; 
   overflow-y: auto; 
 }
 
-.quick-stats-row { display: flex; justify-content: space-around; align-items: center; width: 100%; padding: 5px 0; }
+.quick-stats-row { display: flex; flex-direction: row; justify-content: space-around; align-items: center; width: 100%;}
 .quick-stat { display: flex; flex-direction: column !important; align-items: center; gap: 2px; }
 .quick-stat label { font-size: 28px; font-weight: bold; cursor: default; }
-.quick-stat .stat-indicator { width: 120px !important; height: 60px !important; cursor: pointer; object-fit: fill; }
+.quick-stat .stat-indicator { width: 100px !important; height: 50px !important; cursor: pointer; object-fit: cover; }
 
 .trait-feat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0; min-height: 100px; width: 100%; }
 .item-slot { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; text-align: center; }
@@ -79,7 +79,7 @@
 .item-slot .slot-title { font-size: 28px; }
 .item-wrapper.text-item { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; }
 .item-header { font-size: 18px; font-weight: bold; display: flex; gap: 10px; align-items: center; justify-content: center; width: 100%; }
-.item-description { font-size: 18px; text-align: center; line-height: 1.1; white-space: pre-wrap; overflow-y: auto; max-height: 65px; }
+.item-description { font-size: 18px; text-align: center; line-height: 1.1; white-space: pre-wrap; overflow-y: auto; max-height: 120px; }
 
 .condition-box .item-header span { font-family: 'TitleFont', sans-serif; font-size: 18px; }
 .condition-box .item-description { font-family: sans-serif; white-space: pre-wrap; }
