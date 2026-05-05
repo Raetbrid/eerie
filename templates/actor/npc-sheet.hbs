@@ -1,0 +1,95 @@
+<form class="{{cssClass}} custom-sheet" autocomplete="off">
+  
+  <div class="sheet-main-wrapper" style="width: 100%; padding: 10px;">
+    <div class="sheet-content" style="width: 100%; flex: 1;">
+      
+      <header class="sheet-header" style="position: relative;">
+        
+        <a class="toggle-edit-mode" style="position: absolute; top: 15px; left: 15px; font-size: 24px; color: #333; z-index: 100; cursor: pointer;">
+          <i class="fas {{#if editMode}}fa-lock-open{{else}}fa-lock{{/if}}"></i>
+        </a>
+
+        <div class="portrait-box">
+          <img src="{{actor.img}}" data-edit="img" title="{{actor.name}}"/>
+        </div>
+
+        <div class="header-details">
+          <input name="name" type="text" value="{{actor.name}}" class="charname" placeholder="{{localize 'EERIE.Name'}}" />
+          
+          <textarea name="system.description" placeholder="{{localize 'EERIE.NotesHint'}}" style="flex: 1; margin: 10px 0; font-family: sans-serif; font-style: italic;">{{system.description}}</textarea>
+
+          {{#if editMode}}
+            <div class="quick-stats-row" style="background: rgba(0,0,0,0.1); padding: 10px; border-radius: 10px; align-items: flex-end;">
+              
+              <div class="quick-stat">
+                <input type="text" name="system.bodyLabel" value="{{system.bodyLabel}}" style="width: 100px; text-align: center; font-family: 'TitleFont'; font-size: 20px; background: transparent; border-bottom: 1px dashed #000 !important; outline: none;">
+                <div style="display: flex; align-items: center; gap: 5px; margin-top: 5px; font-family: 'TitleFont';">
+                  Max: <input type="number" name="system.body" value="{{system.body}}" style="width: 40px; text-align: center; background: rgba(0,0,0,0.1); border: none;">
+                </div>
+              </div>
+
+              <div class="quick-stat">
+                <input type="text" name="system.mindLabel" value="{{system.mindLabel}}" style="width: 100px; text-align: center; font-family: 'TitleFont'; font-size: 20px; background: transparent; border-bottom: 1px dashed #000 !important; outline: none;">
+                <div style="display: flex; align-items: center; gap: 5px; margin-top: 5px; font-family: 'TitleFont';">
+                  Max: <input type="number" name="system.mind" value="{{system.mind}}" style="width: 40px; text-align: center; background: rgba(0,0,0,0.1); border: none;">
+                </div>
+              </div>
+
+              <div class="quick-stat">
+                <input type="text" name="system.willLabel" value="{{system.willLabel}}" style="width: 100px; text-align: center; font-family: 'TitleFont'; font-size: 20px; background: transparent; border-bottom: 1px dashed #000 !important; outline: none;">
+                <div style="display: flex; align-items: center; gap: 5px; margin-top: 5px; font-family: 'TitleFont';">
+                  Max: <input type="number" name="system.will" value="{{system.will}}" style="width: 40px; text-align: center; background: rgba(0,0,0,0.1); border: none;">
+                </div>
+              </div>
+
+            </div>
+          {{else}}
+            <div class="quick-stats-row">
+              <div class="quick-stat">
+                <label class="rollable-stat" data-stat="body">{{system.bodyLabel}}</label>
+                <img src="/systems/eerie/assets/stat_{{system.bodyTemp}}-{{system.body}}.webp" class="stat-indicator" data-stat-temp="bodyTemp" onerror="this.style.opacity='0.2'" />
+              </div>
+
+              <div class="quick-stat">
+                <label class="rollable-stat" data-stat="mind">{{system.mindLabel}}</label>
+                <img src="/systems/eerie/assets/stat_{{system.mindTemp}}-{{system.mind}}.webp" class="stat-indicator" data-stat-temp="mindTemp" onerror="this.style.opacity='0.2'" />
+              </div>
+
+              <div class="quick-stat">
+                <label class="rollable-stat" data-stat="will">{{system.willLabel}}</label>
+                <img src="/systems/eerie/assets/stat_{{system.willTemp}}-{{system.will}}.webp" class="stat-indicator" data-stat-temp="willTemp" onerror="this.style.opacity='0.2'" />
+              </div>
+            </div>
+          {{/if}}
+
+        </div>
+      </header>
+
+      <div style="width: 100%; padding: 0 10px; box-sizing: border-box; margin-top: 20px;">
+        <div class="inventory-header" style="width: 100%;">
+          <h2>{{localize 'EERIE.Items'}}</h2>
+          <a class="item-create" data-type="item"><i class="fas fa-plus"></i></a>
+        </div>
+        
+        <div class="inventory-list" style="width: 100%;">
+          {{#each inventory as |item id|}}
+            <div class="inventory-item item-wrapper" data-item-id="{{item._id}}" style="width: 100%;">
+              <a class="item-name" style="flex:1;">{{item.name}}</a>
+              <div class="item-resource-controls">
+                {{#if (ne item.system.weaponType "none")}}
+                  <a class="weapon-roll-click" title="Roll Weapon"><i class="fas fa-dice"></i></a>
+                {{/if}}
+                {{#if (ne item.system.dice.rank "0")}}
+                  <span class="resource-dice-click">{{item.system.dice.rank}}</span>
+                {{/if}}
+              </div>
+              <a class="item-chat" title="To Chat"><i class="fas fa-comment"></i></a>
+              <a class="item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+            </div>
+          {{/each}}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</form>

@@ -1,4 +1,5 @@
 import { eerieCharacterSheet } from "./actor.mjs";
+import { eerieNPCSheet } from "./npc.mjs";
 import { eerieItemSheet } from "./item.mjs";
 
 Hooks.once('init', () => {
@@ -22,8 +23,15 @@ Hooks.once('init', () => {
 
   Actors.unregisterSheet("core", ActorSheet);
   Actors.registerSheet("eerie", eerieCharacterSheet, { 
+    types: ["character"],
     makeDefault: true,
     label: "EERIE.SheetCharacter" 
+  });
+
+  Actors.registerSheet("eerie", eerieNPCSheet, { 
+    types: ["npc"],
+    makeDefault: true,
+    label: "EERIE.SheetNPC" 
   });
 
   Items.unregisterSheet("core", ItemSheet);

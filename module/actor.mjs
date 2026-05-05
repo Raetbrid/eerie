@@ -239,7 +239,12 @@ export class eerieCharacterSheet extends ActorSheet {
     const val = this.actor.system[`${stat}Temp`] || 0;
     let mods = { ...this.actor.system.modifiers };
     let severityBonus = 0;
-    let head = weaponOptions ? weaponOptions.weaponName.toUpperCase() : stat.toUpperCase();
+let customLabel = this.actor.system[`${stat}Label`];
+let statName = customLabel ? customLabel.toUpperCase() : game.i18n.localize(`EERIE.${stat.charAt(0).toUpperCase() + stat.slice(1)}`).toUpperCase();
+
+if(!customLabel && statName.includes("EERIE.")) statName = stat.toUpperCase(); 
+
+let head = weaponOptions ? weaponOptions.weaponName.toUpperCase() : statName;
 
     if (weaponOptions) {
         mods.plusOne = true; mods.increased = true; mods.reduced = false;

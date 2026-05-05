@@ -6,6 +6,15 @@
       "willTemp": 0, "bodyTemp": 0, "mindTemp": 0,
       "modifiers": { "minusOne": false, "disadvantage": false, "plusOne": false, "increased": false, "reduced": false },
       "notes": ""
+    },
+    "npc": {
+      "body": 2, "bodyTemp": 2, "bodyLabel": "BODY",
+      "mind": 2, "mindTemp": 2, "mindLabel": "MIND",
+      "will": 2, "willTemp": 2, "willLabel": "WILL",
+      "description": "",
+      "modifiers": {
+        "plusOne": false, "minusOne": false, "increased": false, "reduced": false, "disadvantage": false
+      }
     }
   },
   "Item": {
