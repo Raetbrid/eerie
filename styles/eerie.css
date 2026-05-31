@@ -128,11 +128,12 @@
 .inventory-header { display: flex; justify-content: space-between; align-items: center; width: 780px; margin-bottom: 20px; padding: 0 10px; }
 .inventory-header h2 { margin: 0; }
 .inventory-header .item-create { font-size: 32px; cursor: pointer; text-decoration: none !important; }
-.inventory-list { display: flex; flex-direction: column; gap: 10px; padding-left: 10px; align-items: flex-start; width: 780px;}
-.inventory-item { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.1); padding: 10px 15px; width: 780px; }
+.inventory-list { display: flex; flex-direction: column; gap: 2px; padding-left: 10px; align-items: flex-start; width: 780px;}
+.inventory-item { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.1); padding: 2px 15px; width: 780px; }
 
 .inventory-item .item-name { 
   font-size: 26px; 
+  line-height: 1;
   cursor: default; 
   font-weight: bold; 
   text-align: left; 
@@ -209,7 +210,7 @@
 }
 
 .eerie-resource-indicator {
-  height: 50px !important;
+  height: 40px !important;
   width: auto !important;
   object-fit: contain !important;
   cursor: pointer;
