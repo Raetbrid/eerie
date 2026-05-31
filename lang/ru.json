@@ -211,6 +211,8 @@
   "EERIE.SettingsCritReliefHint": "Если включено, критический успех восстанавливает +1 Воли и Разума.",
   "EERIE.SettingsPersonalityChatName": "Показывать личность в чате",
   "EERIE.SettingsPersonalityChatHint": "Выводить ли результат генерации предыстории в общий чат.",
+  "EERIE.SettingsTrackerName": "Трекер тиков",
+  "EERIE.SettingsTrackerHint": "Показывает трекер тиков на предмете.",
   
   "EERIE.NotesHint": "Прекрасное поле для заметок..."
 }

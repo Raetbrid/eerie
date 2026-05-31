@@ -14,6 +14,8 @@ export class eerieNPCSheet extends eerieCharacterSheet {
     const context = super.getData();
     const sys = context.system;
 
+    context.itemTrackerEnabled = game.settings.get("eerie", "itemTracker");
+
     sys.bodyLabel = sys.bodyLabel || game.i18n.localize("EERIE.Body") || "BODY";
     sys.mindLabel = sys.mindLabel || game.i18n.localize("EERIE.Mind") || "MIND";
     sys.willLabel = sys.willLabel || game.i18n.localize("EERIE.Will") || "WILL";

@@ -3,6 +3,7 @@ import { eerieNPCSheet } from "./npc.mjs";
 import { eerieItemSheet } from "./item.mjs";
 
 Hooks.once('init', () => {
+  
   game.settings.register("eerie", "critRelief", {
     name: "EERIE.SettingsCritReliefName",
     hint: "EERIE.SettingsCritReliefHint",
@@ -19,6 +20,16 @@ Hooks.once('init', () => {
     config: true,
     type: Boolean,
     default: true
+  });
+  
+  game.settings.register("eerie", "itemTracker", {
+    name: "EERIE.SettingsTrackerName",
+    hint: "EERIE.SettingsTrackerHint",
+    scope: "world",
+    config: true,
+    type: Boolean,
+    default: true,
+    onChange: () => location.reload()
   });
 
   Actors.unregisterSheet("core", ActorSheet);
@@ -44,6 +55,9 @@ Hooks.once('init', () => {
     eq: (a, b) => a === b,
     ne: (a, b) => a !== b,
     lt: (a, b) => a < b,
+    gte: (a, b) => a >= b,
+    and: (a, b) => a && b,
+    or: (a, b) => a || b,
     add: (a, b) => Number(a) + Number(b),
     length: arr => Array.isArray(arr) ? arr.length : 0,
     get: (array, index) => Array.isArray(array) ? array[index] : undefined,

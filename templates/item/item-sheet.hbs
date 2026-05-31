@@ -1,26 +1,26 @@
 <form class="{{cssClass}}" autocomplete="off">
-<header class="sheet-header">
+  <header class="sheet-header">
     <img src="{{item.img}}" data-edit="img" height="100" width="100" />
     <h1 class="charname">
-        <div class="display-name" style="font-size: 20px; font-weight: bold;">
-            {{localize item.name}}
-        </div>
-        <input name="name" type="text" value="{{item.name}}" style="font-size: 12px; color: gray;" />
+      <div class="display-name" style="font-size: 20px; font-weight: bold;">
+        {{localize item.name}}
+      </div>
+      <input name="name" type="text" value="{{item.name}}" style="font-size: 12px; color: gray;" />
     </h1>
-</header>
+  </header>
+
   <nav class="sheet-tabs tabs" data-group="primary">
     <a class="item" data-tab="description">Description</a>
     <a class="item" data-tab="details">Tags & Resource</a>
   </nav>
+
   <section class="sheet-body">
     <div class="tab" data-group="primary" data-tab="description">
       <div class="item-edit-area">
         <label>Localization Key (Edit):</label>
         <textarea name="system.description" style="width: 100%; height: 100px; font-family: monospace;">{{system.description}}</textarea>
       </div>
-      
       <hr>
-      
       <div class="item-preview-area">
         <label>Localized Preview:</label>
         <div class="preview-box" style="padding: 10px; background: rgba(0,0,0,0.05); border-radius: 5px; min-height: 100px; font-size: 16px;">
@@ -28,35 +28,144 @@
         </div>
       </div>
     </div>
-    <div class="tab" data-group="primary" data-tab="details">
-	<hr>
-<div class="form-group">
-  <label>Weapon Category</label>
-  <select name="system.weaponType">
-    {{#select system.weaponType}}
-    <option value="none">None</option>
-    <option value="body">Weapon: Body</option>
-    <option value="mind">Weapon: Mind</option>
-    {{/select}}
-  </select>
-</div>
 
-<div class="form-group">
-  <label>Severity (+ Dots)</label>
-  <input type="number" name="system.severity" value="{{system.severity}}" min="0" max="2" />
-</div>
-	
-	{{#if (or (eq item.type "bodyCondition") (eq item.type "mindCondition"))}}
+    <div class="tab" data-group="primary" data-tab="details">
+      
+      <div class="form-group">
+        <label>Tool Category</label>
+        <select name="system.weaponType">
+          {{#select system.weaponType}}
+          <option value="none">None</option>
+          <option value="body">Tool: Body</option>
+          <option value="mind">Tool: Mind</option>
+          {{/select}}
+        </select>
+      </div>
+
+      {{#if (ne system.weaponType "none")}}
+        <div class="form-group">
+          <label>Severity (+ Dots)</label>
+          <input type="number" name="system.severity" value="{{system.severity}}" min="0" max="2" />
+        </div>
+
+        <div class="form-group">
+          <label title="Ignore character's -1 penalty">Versatile (Keep +1 bonus)</label>
+          <input type="checkbox" name="system.versatile" {{checked system.versatile}} />
+        </div>
+
+        <div class="form-group">
+          <label title="No standard +1 bonus">Unreliable (Raw Stat Roll)</label>
+          <input type="checkbox" name="system.unreliable" {{checked system.unreliable}} />
+        </div>
+      {{/if}}
+
+      <hr>
+
+      <div class="form-group">
+        <label>Tick Tracker (Ticks)</label>
+        <div class="flexrow">
+          <input type="number" name="system.tracker.value" value="{{system.tracker.value}}" title="Current Ticks"/>
+          /
+          <input type="number" name="system.tracker.max" value="{{system.tracker.max}}" title="Max Ticks"/>
+        </div>
+      </div>
+
+      {{#if (ne system.tracker.max 0)}}
+        <div class="form-group">
+          <label title="Partial +1, Success +2">Inverted Logic (Ticks on Success)</label>
+          <input type="checkbox" name="system.tracker.inverted" {{checked system.tracker.inverted}} />
+        </div>
+      {{/if}}
+
+      <hr>
+
+      <div class="form-group">
+        <label>Item Mode</label>
+        <select name="system.subType">
+          {{#select system.subType}}
+          <option value="simple">Simple</option>
+          <option value="count">Count</option>
+          <option value="dice">Dice</option>
+          <option value="eerie">Eerie</option>
+          {{/select}}
+        </select>
+      </div>
+
+      {{#if (eq system.subType "count")}}
+        <div class="form-group">
+          <label>Value/Max</label>
+          <div class="flexrow">
+            <input type="number" name="system.count.value" value="{{system.count.value}}"/>
+            /
+            <input type="number" name="system.count.max" value="{{system.count.max}}"/>
+          </div>
+        </div>
+      {{/if}}
+
+      {{#if (eq system.subType "dice")}}
+        <div class="form-group">
+          <label>Rank</label>
+          <select name="system.dice.rank">
+            {{#select system.dice.rank}}
+            <option value="0">None</option>
+            <option value="d4">d4</option>
+            <option value="d6">d6</option>
+            <option value="d8">d8</option>
+            <option value="d10">d10</option>
+            <option value="d12">d12</option>
+            {{/select}}
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Fail on N or less</label>
+          <input type="number" name="system.dice.n" value="{{system.dice.n}}"/>
+        </div>
+      {{/if}}
+
+      {{#if (eq system.subType "eerie")}}
+        <div class="eerie-settings" style="background: rgba(0,0,0,0.05); padding: 10px; border-radius: 5px; margin-top: 10px; border: 1px solid #ccc;">
+          <div class="form-group">
+            <label>Current Resource (0-3)</label>
+            <input type="number" name="system.eerie.value" value="{{system.eerie.value}}" min="0" max="3" />
+          </div>
+          <div class="form-group">
+            <label>Scarcity (Dice Modifier)</label>
+            <div class="scarcity-checkboxes" style="display: flex; gap: 10px;">
+              <label><input type="checkbox" name="system.eerie.minusOne" {{checked system.eerie.minusOne}} /> -1 Die</label>
+              <label><input type="checkbox" name="system.eerie.plusOne" {{checked system.eerie.plusOne}} /> +1 Die</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label title="Lose on 1-5">Expendable (1-5 fail)</label>
+            <input type="checkbox" name="system.eerie.expendable" {{checked system.eerie.expendable}} />
+          </div>
+          <div class="form-group">
+            <label title="Drop highest">Sturdy (Always Disadvantage)</label>
+            <input type="checkbox" name="system.eerie.sturdy" {{checked system.eerie.sturdy}} />
+          </div>
+        </div>
+      {{/if}}
+
+      {{!-- TRAITS & FEATS --}}
+      {{#if (eq item.type "trait")}}
+        <hr>
+        <div class="form-group"><label>Category</label><input type="text" name="system.category" value="{{system.category}}"/></div>
+        <div class="form-group"><label>Level</label><input type="number" name="system.level" value="{{system.level}}"/></div>
+      {{/if}}
+
+      {{#if (eq item.type "feat")}}
+        <hr>
+        <div class="form-group"><label>Group</label><input type="text" name="system.group" value="{{system.group}}"/></div>
+      {{/if}}
+
+      {{#if (or (eq item.type "bodyCondition") (eq item.type "mindCondition"))}}
+        <hr>
         <div class="form-group">
           <label>Condition Level (1, 2 or 3)</label>
           <input type="number" name="system.level" value="{{system.level}}" min="1" max="3" />
         </div>
       {{/if}}
-      <div class="form-group"><label>Item Mode</label><select name="system.subType">{{#select system.subType}}<option value="simple">Simple</option><option value="count">Count</option><option value="dice">Dice</option>{{/select}}</select></div>
-      {{#if (eq system.subType "count")}}<div class="form-group"><label>Value/Max</label><div class="flexrow"><input type="number" name="system.count.value" value="{{system.count.value}}"/>/<input type="number" name="system.count.max" value="{{system.count.max}}"/></div></div>{{/if}}
-      {{#if (eq system.subType "dice")}}<div class="form-group"><label>Rank</label><select name="system.dice.rank">{{#select system.dice.rank}}<option value="0">None</option><option value="d4">d4</option><option value="d6">d6</option><option value="d8">d8</option><option value="d10">d10</option><option value="d12">d12</option>{{/select}}</select></div><div class="form-group"><label>Fail on N or less</label><input type="number" name="system.dice.n" value="{{system.dice.n}}"/></div>{{/if}}
-      {{#if (eq item.type "trait")}}<div class="form-group"><label>Cat</label><input type="text" name="system.category" value="{{system.category}}"/></div><div class="form-group"><label>Lvl</label><input type="number" name="system.level" value="{{system.level}}"/></div>{{/if}}
-      {{#if (eq item.type "feat")}}<div class="form-group"><label>Group</label><input type="text" name="system.group" value="{{system.group}}"/></div>{{/if}}
+
     </div>
   </section>
 </form>

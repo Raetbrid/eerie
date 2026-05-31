@@ -130,7 +130,22 @@
 .inventory-header .item-create { font-size: 32px; cursor: pointer; text-decoration: none !important; }
 .inventory-list { display: flex; flex-direction: column; gap: 10px; padding-left: 10px; align-items: flex-start; width: 780px;}
 .inventory-item { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.1); padding: 10px 15px; width: 780px; }
-.inventory-item .item-name { font-size: 26px; cursor: pointer; font-weight: bold; text-align: left; }
+
+.inventory-item .item-name { 
+  font-size: 26px; 
+  cursor: default; 
+  font-weight: bold; 
+  text-align: left; 
+}
+
+.item-name.eerie-rollable {
+  cursor: pointer !important;
+}
+.item-name.eerie-rollable:hover {
+  color: #02e0c3;
+  text-shadow: 0 0 5px rgba(2, 224, 195, 0.5);
+}
+
 .item-resource-controls { display: flex; justify-content: center; gap: 15px; margin: 0 20px; }
 .resource-count-click, .resource-dice-click { background: rgba(0,0,0,0.1); padding: 4px 12px; border-radius: 4px; cursor: pointer; font-size: 20px; font-weight: bold; }
 .weapon-roll-click { font-size: 24px; color: #555; cursor: pointer; margin-right: 15px; transition: color 0.2s; }
@@ -187,147 +202,52 @@
 
 .item-chat:hover {
   color: #02e0c3;
+}
 
 .inventory-item .item-chat {
   order: -1;
 }
 
-
-
-/* ================================
-   NPC SHEET STYLES
-   ================================ */
-.eerie.sheet.npc .npc-sheet-container {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 30px 20px 20px 20px; 
-}
-
-.eerie.sheet.npc .lock-npc-btn {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  font-size: 20px;
-  cursor: pointer;
-  color: #333;
-  z-index: 10;
-  transition: 0.2s;
-}
-.eerie.sheet.npc .lock-npc-btn:hover {
-  color: #02e0c3;
-}
-
-
-.eerie.sheet.npc .npc-top-section {
-  display: flex !important;
-  flex-direction: row !important; 
-  flex-wrap: nowrap;
-  align-items: flex-start;
-  gap: 20px;
-  width: 100%;
-}
-
-.eerie.sheet.npc .npc-portrait {
-  width: 220px !important;
-  height: 220px !important;
-  flex: 0 0 220px; 
-  border-radius: 5px;
-  overflow: hidden;
-}
-
-
-.eerie.sheet.npc .npc-info-section {
-  display: flex !important;
-  flex-direction: column !important;
-  flex: 1; 
-  gap: 10px;
-  min-width: 0;
-}
-
-.eerie.sheet.npc .npc-name-input {
-  font-size: 32px;
-  text-align: left !important;
-  border-bottom: 2px solid rgba(0,0,0,0.5) !important;
-  height: 40px;
-  padding: 0 5px;
-}
-
-.eerie.sheet.npc .npc-description {
-  flex: 1; 
-  min-height: 80px;
-  background: transparent !important;
-  border: 1px dashed rgba(0,0,0,0.3) !important;
-  text-align: left !important; 
-  padding: 5px;
-  font-family: sans-serif;
-  font-size: 16px;
-  resize: none;
-}
-
-.eerie.sheet.npc .npc-stats-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-}
-
-.eerie.sheet.npc .npc-quick-stats {
-  width: 100%;
-  margin-top: 10px;
-}
-
-.eerie.sheet.npc .stat-indicator {
-  width: 100px !important;
+.eerie-resource-indicator {
   height: 50px !important;
-  object-fit: contain;
+  width: auto !important;
+  object-fit: contain !important;
   cursor: pointer;
+  vertical-align: middle;
+  display: inline-block;
+  margin: 0 5px;
+  border: none !important;
+  box-shadow: none !important;
 }
 
-.eerie.sheet.npc .npc-edit-stats {
-  display: flex;
-  width: 100%;
-  justify-content: space-around;
-  background: rgba(0,0,0,0.05);
-  border: 1px solid rgba(0,0,0,0.2);
-  padding: 10px;
-  border-radius: 5px;
-}
-
-.eerie.sheet.npc .edit-stat-row {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.eerie.sheet.npc .npc-label-input {
-  font-family: 'TitleFont', sans-serif;
+.item-edit {
   font-size: 20px;
-  text-align: center;
-  border-bottom: 1px dashed #666 !important;
-  width: 100px;
-  background: transparent;
+  color: #666;
+  cursor: pointer;
+  margin-right: 10px;
+  transition: color 0.2s;
+}
+.item-edit:hover { color: #02e0c3; }
+
+.item-controls { display: flex; align-items: center; gap: 5px; }
+
+.scarcity-checkboxes { display: flex; gap: 10px; align-items: center; }
+
+.item-ticks {
+  margin-left: 10px;
+  cursor: pointer;
+  font-size: 40px;
+  letter-spacing: 2px;
+  user-select: none;
+  display: inline-block;
+  vertical-align: middle;
 }
 
-.eerie.sheet.npc .max-input-group {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  margin-top: 5px;
-  font-weight: bold;
+.item-ticks.full {
+  color: #ffd700;
+  text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
 }
 
-.eerie.sheet.npc .max-input-group input {
-  width: 40px;
-  text-align: center;
-  font-size: 18px;
-  background: rgba(0,0,0,0.1);
-}
-
-.eerie.sheet.npc .npc-inventory-section {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  margin-top: 10px;
+.item-ticks:hover {
+  filter: brightness(1.5);
 }

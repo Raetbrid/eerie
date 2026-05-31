@@ -1,28 +1,96 @@
 {
   "Actor": {
-    "types": ["character"],
+    "types": ["character", "npc"],
     "character": {
-      "will": 0, "body": 0, "mind": 0,
-      "willTemp": 0, "bodyTemp": 0, "mindTemp": 0,
-      "modifiers": { "minusOne": false, "disadvantage": false, "plusOne": false, "increased": false, "reduced": false },
-      "notes": ""
+      "prototypeToken": {
+        "actorLink": true
+      },
+      "will": 1,
+      "body": 0,
+      "mind": 0,
+      "willTemp": 1,
+      "bodyTemp": 0,
+      "mindTemp": 0,
+      "details": "",
+      "solace": "",
+      "notes": "",
+      "modifiers": {
+        "minusOne": false,
+        "disadvantage": false,
+        "plusOne": false,
+        "increased": false,
+        "reduced": false
+      }
     },
     "npc": {
-      "body": 2, "bodyTemp": 2, "bodyLabel": "BODY",
-      "mind": 2, "mindTemp": 2, "mindLabel": "MIND",
-      "will": 2, "willTemp": 2, "willLabel": "WILL",
+      "prototypeToken": {
+        "actorLink": true
+      },
+      "body": 2,
+      "bodyTemp": 2,
+      "bodyLabel": "BODY",
+      "mind": 2,
+      "mindTemp": 2,
+      "mindLabel": "MIND",
+      "will": 2,
+      "willTemp": 2,
+      "willLabel": "WILL",
       "description": "",
       "modifiers": {
-        "plusOne": false, "minusOne": false, "increased": false, "reduced": false, "disadvantage": false
+        "plusOne": false,
+        "minusOne": false,
+        "increased": false,
+        "reduced": false,
+        "disadvantage": false
       }
     }
   },
   "Item": {
     "types": ["trait", "feat", "bodyCondition", "mindCondition", "item"],
-    "trait": { "description": "", "category": "Body", "level": 1 },
-    "feat": { "description": "", "group": "Physical" },
-    "bodyCondition": { "description": "", "level": 1 },
-    "mindCondition": { "description": "", "level": 1 },
-    "item": { "description": "", "subType": "simple","weaponType": "none", "severity": 0, "count": { "value": 0, "max": 1 }, "dice": { "rank": "d6", "n": 1 } }
+    "trait": {
+      "description": "",
+      "category": "Body",
+      "level": 1
+    },
+    "feat": {
+      "description": "",
+      "group": "Physical"
+    },
+    "bodyCondition": {
+      "description": "",
+      "level": 1
+    },
+    "mindCondition": {
+      "description": "",
+      "level": 1
+    },
+    "item": {
+      "description": "",
+      "subType": "simple",
+      "weaponType": "none",
+      "severity": 0,
+      "versatile": false,
+      "unreliable": false,
+      "eerie": {
+        "value": 0,
+        "plusOne": false,
+        "minusOne": false,
+        "expendable": false,
+        "sturdy": false
+      },
+      "tracker": {
+        "value": 0,
+        "max": 0,
+        "inverted": false
+      },
+      "count": {
+        "value": 0,
+        "max": 1
+      },
+      "dice": {
+        "rank": "d6",
+        "n": 1
+      }
+    }
   }
 }

@@ -211,6 +211,8 @@
   "EERIE.SettingsCritReliefHint": "If enabled, a Critical Success restores +1 Will and Mind (up to maximum).",
   "EERIE.SettingsPersonalityChatName": "Show Personality to Chat",
   "EERIE.SettingsPersonalityChatHint": "Whether to post the personality generation results to the public chat.",
+  "EERIE.SettingsTrackerName": "Ticks Tracker",
+  "EERIE.SettingsTrackerHint": "Show ticks tracker on the item.",
   
   "EERIE.NotesHint": "Write your notes here..."
 }

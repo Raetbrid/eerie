@@ -72,19 +72,44 @@
         </div>
         
         <div class="inventory-list" style="width: 100%;">
-          {{#each inventory as |item id|}}
-            <div class="inventory-item item-wrapper" data-item-id="{{item._id}}" style="width: 100%;">
-              <a class="item-name" style="flex:1;">{{item.name}}</a>
-              <div class="item-resource-controls">
-                {{#if (ne item.system.weaponType "none")}}
-                  <a class="weapon-roll-click" title="Roll Weapon"><i class="fas fa-dice"></i></a>
+          {{#each inventory}}
+            <div class="inventory-item item-wrapper" data-item-id="{{this._id}}" style="width: 100%;">
+              
+              <div class="item-name-group" style="display: flex; align-items: center; flex: 1;">
+                {{#if (or (eq this.system.subType 'eerie') (ne this.system.weaponType 'none'))}}
+                  <div class="item-name eerie-rollable" title="Click to Roll">{{this.name}}</div>
+                {{else}}
+                  <div class="item-name">{{this.name}}</div>
                 {{/if}}
-                {{#if (ne item.system.dice.rank "0")}}
-                  <span class="resource-dice-click">{{item.system.dice.rank}}</span>
+
+                {{#if (and @root.itemTrackerEnabled (ne this.system.tracker.max 0))}}
+                  <div class="item-ticks {{#if (gte this.system.tracker.value this.system.tracker.max)}}full{{/if}}" 
+                       title="Ticks: {{this.system.tracker.value}}/{{this.system.tracker.max}} (L-Click +, R-Click -)">
+                    {{#times this.system.tracker.max}}
+                      {{#if (lt this ../system.tracker.value)}}●{{else}}○{{/if}}
+                    {{/times}}
+                  </div>
                 {{/if}}
               </div>
-              <a class="item-chat" title="To Chat"><i class="fas fa-comment"></i></a>
-              <a class="item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+
+              <div class="item-resource-controls">
+                {{#if (eq this.system.subType "count")}}
+                  <span class="resource-count-click" title="L-click +, R-click -">{{this.system.count.value}} / {{this.system.count.max}}</span>
+                {{/if}}
+                {{#if (eq this.system.subType "dice")}}
+                  <span class="resource-dice-click" title="Roll Resource">{{this.system.dice.rank}}</span>
+                {{/if}}
+                {{#if (eq this.system.subType "eerie")}}
+                  <img class="eerie-resource-indicator" src="systems/eerie/assets/stat_{{this.system.eerie.value}}-3.webp" title="Resource: {{this.system.eerie.value}}" />
+                {{/if}}
+              </div>
+
+              <div class="item-controls" style="display:flex; gap:10px; align-items:center; margin-left:10px;">
+                <a class="item-chat" title="Send to Chat"><i class="fas fa-comment-dots"></i></a>
+                <a class="item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+                <a class="item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+              </div>
+              
             </div>
           {{/each}}
         </div>
