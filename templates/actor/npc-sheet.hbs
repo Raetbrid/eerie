@@ -19,8 +19,14 @@
           <textarea name="system.description" placeholder="{{localize 'EERIE.NotesHint'}}" style="flex: 1; margin: 10px 0; font-family: sans-serif; font-style: italic;">{{system.description}}</textarea>
 
           {{#if editMode}}
-            <div class="quick-stats-row" style="background: rgba(0,0,0,0.1); padding: 10px; border-radius: 10px; align-items: flex-end;">
+            <div class="quick-stats-row" style="background: rgba(0,0,0,0.1); padding: 10px; border-radius: 10px; flex-wrap: wrap;">
               
+              {{!-- ПЕРЕКЛЮЧАТЕЛЬ ПРАВИЛА ИНИЦИАТИВЫ --}}
+              <div style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 10px; border-bottom: 1px dashed #000; padding-bottom: 5px;">
+                <label style="font-family: 'TitleFont'; font-size: 14px;">USE INITIATIVE RULE:</label>
+                <input type="checkbox" name="system.initiative.active" {{checked system.initiative.active}} />
+              </div>
+
               <div class="quick-stat">
                 <input type="text" name="system.bodyLabel" value="{{system.bodyLabel}}" style="width: 100px; text-align: center; font-family: 'TitleFont'; font-size: 20px; background: transparent; border-bottom: 1px dashed #000 !important; outline: none;">
                 <div style="display: flex; align-items: center; gap: 5px; margin-top: 5px; font-family: 'TitleFont';">
@@ -46,12 +52,12 @@
           {{else}}
             <div class="quick-stats-row">
               <div class="quick-stat">
-                <label class="rollable-stat" data-stat="body">{{system.bodyLabel}}</label>
+                <label class="rollable-stat {{#if (and @root.initiativeEnabled system.initiative.bodyLost)}}lost-initiative{{/if}}" data-stat="body">{{system.bodyLabel}}</label>
                 <img src="/systems/eerie/assets/stat_{{system.bodyTemp}}-{{system.body}}.webp" class="stat-indicator" data-stat-temp="bodyTemp" onerror="this.style.opacity='0.2'" />
               </div>
 
               <div class="quick-stat">
-                <label class="rollable-stat" data-stat="mind">{{system.mindLabel}}</label>
+                <label class="rollable-stat {{#if (and @root.initiativeEnabled system.initiative.mindLost)}}lost-initiative{{/if}}" data-stat="mind">{{system.mindLabel}}</label>
                 <img src="/systems/eerie/assets/stat_{{system.mindTemp}}-{{system.mind}}.webp" class="stat-indicator" data-stat-temp="mindTemp" onerror="this.style.opacity='0.2'" />
               </div>
 

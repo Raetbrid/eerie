@@ -34,6 +34,7 @@ export class eerieCharacterSheet extends ActorSheet {
     context.inventory = context.items.filter(i => i.type === "item");
     context.editMode = this.editMode;
     context.itemTrackerEnabled = game.settings.get("eerie", "itemTracker");
+    context.initiativeEnabled = game.settings.get("eerie", "initiative");
     return context;
   }
 
@@ -57,7 +58,6 @@ export class eerieCharacterSheet extends ActorSheet {
     html.find('.stat-box-image, .stat-indicator').on('contextmenu', e => e.preventDefault()).mousedown(this._onTempStatClick.bind(this));
     html.find('.item-ticks').on('contextmenu', e => e.preventDefault()).mousedown(this._onItemTicksClick.bind(this));
 	
-    // Клик по имени только для роллабильных (Инструмент и Eerie)
     html.find('.item-name.eerie-rollable').click(ev => {
       const li = $(ev.currentTarget).closest('.inventory-item');
       const item = this.actor.items.get(li.data("itemId"));
@@ -71,9 +71,19 @@ export class eerieCharacterSheet extends ActorSheet {
       }
     });
 
+    html.find('.rollable-stat')
+      .on('contextmenu', e => e.preventDefault())
+      .mousedown(ev => {
+        const stat = ev.currentTarget.dataset.stat;
+        if (ev.button === 0) {
+          this._rollStat(stat);
+        } else if (ev.button === 2) {
+          this._onResetInitiative(stat);
+        }
+      });
+
     html.find('.item-delete').click(this._onItemDelete.bind(this));
     html.find('.item-create').click(this._onItemCreate.bind(this));
-    html.find('.rollable-stat').click(ev => this._rollStat(ev.currentTarget.dataset.stat));
     html.find('.resource-count-click').on('contextmenu', e => e.preventDefault()).mousedown(this._onCountResourceClick.bind(this));
     html.find('.resource-dice-click').click(this._onDiceResourceClick.bind(this));
     html.find('.item-chat').click(this._onItemToChat.bind(this));
@@ -95,6 +105,17 @@ export class eerieCharacterSheet extends ActorSheet {
         if (item) { await item.update({ [n.includes("plusOne") ? "system.eerie.minusOne" : "system.eerie.plusOne"]: false }); }
       }
     });
+  }
+
+  async _onResetInitiative(stat) {
+    const globalRule = game.settings.get("eerie", "initiative");
+    const actorRule = this.actor.system.initiative?.active ?? true;
+
+    if (globalRule && actorRule && (stat === 'body' || stat === 'mind')) {
+      await this.actor.update({
+        [`system.initiative.${stat}Lost`]: false
+      });
+    }
   }
 
   async _onEerieResourceClick(ev) {
@@ -166,7 +187,7 @@ export class eerieCharacterSheet extends ActorSheet {
     }
     if (type === "item") return await this.actor.createEmbeddedDocuments("Item", [{ name: "New Item", type: "item" }]);
     const count = this.actor.items.filter(i => i.type === type).length;
-    if (count >= 3) return ui.notifications.warn("Слоты заполнены");
+    if (count >= 3) return ui.notifications.warn("You can't acquire any more conditions");
     const targetLevel = count + 1;
     const pack = game.packs.get("eerie.conds");
     let itemData = null;
@@ -182,21 +203,29 @@ export class eerieCharacterSheet extends ActorSheet {
   async _rollStat(stat, weapon = null) {
     const val = this.actor.system[`${stat}Temp`] || 0;
     const charMods = this.actor.system.modifiers;
+    const globalRule = game.settings.get("eerie", "initiative");
+    const actorRule = this.actor.system.initiative?.active ?? true;
+    const initiativeActive = globalRule && actorRule;
+
     let severityBonus = 0;
 
-    // ОПРЕДЕЛЕНИЕ НАЗВАНИЯ ХАРАКТЕРИСТИКИ (Label)
     let customLabel = this.actor.system[`${stat}Label`];
     let statName = customLabel ? customLabel.toUpperCase() : game.i18n.localize(`EERIE.${stat.charAt(0).toUpperCase() + stat.slice(1)}`).toUpperCase();
     if (statName.includes("EERIE.")) statName = stat.toUpperCase();
 
-    // Заголовок карточки
     let head = weapon ? weapon.name.toUpperCase() : statName;
     let subHead = weapon ? ` (${statName})` : "";
 
-    // ЛОГИКА МОДИФИКАТОРОВ КУБОВ
     let hasPlus = charMods.plusOne;
     let hasMinus = charMods.minusOne;
     let hasDisadv = charMods.disadvantage;
+
+    if (initiativeActive && (stat === 'body' || stat === 'mind')) {
+      if (this.actor.system.initiative?.[`${stat}Lost`]) {
+        hasDisadv = true;
+        subHead += " [LOST INITIATIVE]";
+      }
+    }
 
     if (weapon && weapon.id) {
       severityBonus = weapon.system.severity || 0;
@@ -224,12 +253,22 @@ export class eerieCharacterSheet extends ActorSheet {
     const sixes = active.filter(d => d === 6).length;
 
     let resT = "", resC = "", disp = best, resCl = "res-fail", baseDots = 0;
-    if (sixes >= 2) { resT = game.i18n.format("EERIE.ChatCritical"); resC = "#006400"; disp = "6&6"; resCl = "res-crit"; baseDots = 3; }
-    else if (best === 6) { resT = game.i18n.format("EERIE.ChatSuccess"); resC = "#00008b"; resCl = "res-success"; baseDots = 2; }
-    else if (best >= 4) { resT = game.i18n.format("EERIE.ChatPartial"); resC = "#8b4513"; resCl = "res-partial"; baseDots = 1; }
-    else { resT = game.i18n.format("EERIE.ChatFail"); resC = "#8b0000"; resCl = "res-fail"; baseDots = 0; }
+    if (sixes >= 2) { resT = "CRITICAL"; resC = "#006400"; disp = "6&6"; resCl = "res-crit"; baseDots = 3; }
+    else if (best === 6) { resT = "SUCCESS"; resC = "#00008b"; resCl = "res-success"; baseDots = 2; }
+    else if (best >= 4) { resT = "PARTIAL"; resC = "#8b4513"; resCl = "res-partial"; baseDots = 1; }
+    else { resT = "FAILURE"; resC = "#8b0000"; resCl = "res-fail"; baseDots = 0; }
 
-    // ЛОГИКА ЭФФЕКТИВНОСТИ
+    if (initiativeActive && (stat === 'body' || stat === 'mind')) {
+      let initUpdates = {};
+      if (resCl === "res-fail") {
+        initUpdates[`system.initiative.${stat}Lost`] = true;
+      } else {
+        initUpdates["system.initiative.bodyLost"] = false;
+        initUpdates["system.initiative.mindLost"] = false;
+      }
+      await this.actor.update(initUpdates);
+    }
+
     let finalDots = 0;
     if (resCl !== "res-fail") {
       let effMod = 0;
@@ -246,7 +285,6 @@ export class eerieCharacterSheet extends ActorSheet {
     const dice = roll.terms[0].results.map(d => `<span class="die ${d.active ? '' : 'die-discarded'}">${d.result}</span>`).join("");
     const content = `<div class="eerie-roll-card"><div class="roll-header">${head}${subHead} CHECK</div><div class="roll-result-body ${resCl}"><div class="result-number">${disp}</div><div class="result-text" style="color:${resC}">${resT}</div>${dotsHtml}</div><div class="roll-dice-tray">${dice}</div></div>`;
 
-    // ТИКИ ТРЕКЕРА
     if (weapon && weapon.id && game.settings.get("eerie", "itemTracker")) {
       const item = this.actor.items.get(weapon.id);
       if (item && item.system.tracker.max > 0) {

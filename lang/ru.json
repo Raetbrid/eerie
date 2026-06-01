@@ -213,6 +213,8 @@
   "EERIE.SettingsPersonalityChatHint": "Выводить ли результат генерации предыстории в общий чат.",
   "EERIE.SettingsTrackerName": "Трекер тиков",
   "EERIE.SettingsTrackerHint": "Показывает трекер тиков на предмете.",
+  "EERIE.SettingsInitiativeName": "Правило инициативы",
+  "EERIE.SettingsInitiativeHint": "Провал проверки создает помеху до следующей успешной проверки.",
   
   "EERIE.NotesHint": "Прекрасное поле для заметок..."
 }

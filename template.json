@@ -11,6 +11,11 @@
       "willTemp": 1,
       "bodyTemp": 0,
       "mindTemp": 0,
+	  "initiative": {
+		"active": true,
+        "bodyLost": false,
+        "mindLost": false
+      },
       "details": "",
       "solace": "",
       "notes": "",
@@ -36,6 +41,11 @@
       "willTemp": 2,
       "willLabel": "WILL",
       "description": "",
+	  "initiative": {
+		"active": true,
+        "bodyLost": false,
+        "mindLost": false
+      },
       "modifiers": {
         "plusOne": false,
         "minusOne": false,

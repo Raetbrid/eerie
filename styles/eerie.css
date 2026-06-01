@@ -252,3 +252,10 @@
 .item-ticks:hover {
   filter: brightness(1.5);
 }
+
+.rollable-stat.lost-initiative {
+  opacity: 0.5;
+  color: #666 !important;
+  filter: grayscale(1);
+  transition: 0.3s;
+}

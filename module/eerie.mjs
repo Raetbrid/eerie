@@ -22,6 +22,15 @@ Hooks.once('init', () => {
     default: true
   });
   
+  game.settings.register("eerie", "initiative", {
+  name: "EERIE.SettingsInitiativeName",
+  hint: "EERIE.SettingsInitiativeHint",
+  scope: "world",
+  config: true,
+  type: Boolean,
+  default: true
+  });
+  
   game.settings.register("eerie", "itemTracker", {
     name: "EERIE.SettingsTrackerName",
     hint: "EERIE.SettingsTrackerHint",

@@ -50,12 +50,14 @@
               {{else}}<img class="stat-indicator" src="systems/eerie/assets/stat_{{system.willTemp}}-{{system.will}}.webp" data-stat-temp="willTemp" />{{/if}}
             </div>
             <div class="quick-stat">
-              <label class="rollable-stat" data-stat="body">{{localize "EERIE.Body"}}</label>
+              {{!-- ПРОВЕРКА ИНИЦИАТИВЫ ДЛЯ BODY --}}
+              <label class="rollable-stat {{#if (and @root.initiativeEnabled system.initiative.bodyLost)}}lost-initiative{{/if}}" data-stat="body">{{localize "EERIE.Body"}}</label>
               {{#if editMode}}<input type="number" name="system.body" value="{{system.body}}" min="0" max="3" />
               {{else}}<img class="stat-indicator" src="systems/eerie/assets/stat_{{system.bodyTemp}}-{{system.body}}.webp" data-stat-temp="bodyTemp" />{{/if}}
             </div>
             <div class="quick-stat">
-              <label class="rollable-stat" data-stat="mind">{{localize "EERIE.Mind"}}</label>
+              {{!-- ПРОВЕРКА ИНИЦИАТИВЫ ДЛЯ MIND --}}
+              <label class="rollable-stat {{#if (and @root.initiativeEnabled system.initiative.mindLost)}}lost-initiative{{/if}}" data-stat="mind">{{localize "EERIE.Mind"}}</label>
               {{#if editMode}}<input type="number" name="system.mind" value="{{system.mind}}" min="0" max="3" />
               {{else}}<img class="stat-indicator" src="systems/eerie/assets/stat_{{system.mindTemp}}-{{system.mind}}.webp" data-stat-temp="mindTemp" />{{/if}}
             </div>
