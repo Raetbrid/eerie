@@ -81,6 +81,7 @@
       "severity": 0,
       "versatile": false,
       "unreliable": false,
+	  "multiResult": 1,
       "eerie": {
         "value": 0,
         "plusOne": false,

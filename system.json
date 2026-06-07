@@ -36,6 +36,16 @@
       "label": "Feats",
       "path": "packs/feats",
       "type": "Item"
+    },
+	{
+    "name": "items",
+    "label": "Items",
+    "path": "packs/items",
+    "type": "Item",
+    "ownership": {
+      "PLAYER": "OBSERVER",
+      "ASSISTANT": "OWNER"
+    }
     }
   ],
   

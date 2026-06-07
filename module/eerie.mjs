@@ -13,6 +13,15 @@ Hooks.once('init', () => {
     default: true
   });
 
+	game.settings.register("eerie", "advancedRoll", {
+	  name: "EERIE.SettingsAdvRollName",
+	  hint: "EERIE.SettingsAdvRollHint",
+	  scope: "world",
+	  config: true,
+	  type: Boolean,
+	  default: true
+	});
+
   game.settings.register("eerie", "showPersonalityToChat", {
     name: "EERIE.SettingsPersonalityChatName",
     hint: "EERIE.SettingsPersonalityChatHint",
@@ -78,4 +87,29 @@ Hooks.once('init', () => {
   });
 
   console.log("Eerie System | Initialized");
+});
+
+Hooks.on("renderChatMessage", (message, html, data) => {
+  html.find('.reroll-precise').click(async ev => {
+    const actorId = ev.currentTarget.dataset.actorId;
+    const itemId = ev.currentTarget.dataset.itemId;
+    const penalty = ev.currentTarget.dataset.penalty === "true";
+    const actor = game.actors.get(actorId);
+    const item = actor?.items.get(itemId);
+
+    if (!actor || !item) return;
+
+    if (actor.system.willTemp > 0) {
+      // Вычитаем волю
+      await actor.update({"system.willTemp": actor.system.willTemp - 1});
+      // Совершаем тот же бросок
+      const sheet = actor.sheet;
+      sheet._rollStat(item.system.weaponType, item, { 
+        mode: "precise", 
+        penalty: penalty 
+      });
+    } else {
+      ui.notifications.warn("Not enough Will to reroll!");
+    }
+  });
 });

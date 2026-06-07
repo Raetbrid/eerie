@@ -214,7 +214,19 @@
   "EERIE.SettingsTrackerName": "Трекер тиков",
   "EERIE.SettingsTrackerHint": "Показывает трекер тиков на предмете.",
   "EERIE.SettingsInitiativeName": "Правило инициативы",
-  "EERIE.SettingsInitiativeHint": "Провал проверки создает помеху до следующей успешной проверки.",
+  "EERIE.SettingsInitiativeHint": "Провал проверки создает помеху до следующей успешной проверки. ПКМ по Стату для сброса",
+  
+  "EERIE.SettingsAdvRollName": "Дополнительные опции использования предмета",
+  "EERIE.SettingsAdvRollHint": "Включает расширенное меню броска при правом клике по названию предмета в инвентаре.",
+  "EERIE.WillReroll": "ПЕРЕБРОС ЗА ВОЛЮ",
+  "EERIE.AdvRoll1": "+1 тик",
+  "EERIE.AdvRoll1Hint": "Добавляет дополнительный тик к результату успеха.",
+  "EERIE.AdvRoll2": "+2 тика",
+  "EERIE.AdvRoll2Hint": "Добавляет 2 дополнительных тика к результату успеха.",
+  "EERIE.AdvRollDeplete": "Исчерпать",
+  "EERIE.AdvRollDepleteHint": "Полностью расходует ресурс предмета, используя каждый выпавший успех.",
+  "EERIE.AdvRollPrecise": "Точность",
+  "EERIE.AdvRollPreciseHint": "Позволяет переброс за счёт Воли.",
   
   "EERIE.NotesHint": "Прекрасное поле для заметок..."
 }

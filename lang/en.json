@@ -212,9 +212,21 @@
   "EERIE.SettingsPersonalityChatName": "Show Personality to Chat",
   "EERIE.SettingsPersonalityChatHint": "Whether to post the personality generation results to the public chat.",
   "EERIE.SettingsTrackerName": "Ticks Tracker",
-  "EERIE.SettingsTrackerHint": "Show ticks tracker on the item.",
+  "EERIE.SettingsTrackerHint": "Show ticks tracker on the item",
   "EERIE.SettingsInitiativeName": "Enable Initiative Rule",
-  "EERIE.SettingsInitiativeHint": "A failed check grants disadvantage until the next successful check.",
+  "EERIE.SettingsInitiativeHint": "A failed check grants disadvantage until the next successful check. RMB on Stat for reset",
+  
+  "EERIE.SettingsAdvRollName": "Advanced Item Roll",
+  "EERIE.SettingsAdvRollHint": "Unlocks the advanced roll menu for inventory items.",
+  "EERIE.WillReroll": "REROLL FOR WILL",
+  "EERIE.AdvRoll1": "+1 ticks",
+  "EERIE.AdvRoll1Hint": "Grants an additional tick to the success result.",
+  "EERIE.AdvRoll2": "+2 ticks",
+  "EERIE.AdvRoll2Hint": "Grants 2 additional ticks to the success result.",
+  "EERIE.AdvRollDeplete": "Deplete",
+  "EERIE.AdvRollDepleteHint": "Completely depletes the item's resource, applying each rolled success.",
+  "EERIE.AdvRollPrecise": "Precise",
+  "EERIE.AdvRollPreciseHint": "Allows rerolls at the cost of Will.",
   
   "EERIE.NotesHint": "Write your notes here..."
 }

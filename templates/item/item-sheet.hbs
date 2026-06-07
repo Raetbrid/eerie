@@ -57,6 +57,17 @@
           <label title="No standard +1 bonus">Unreliable (Raw Stat Roll)</label>
           <input type="checkbox" name="system.unreliable" {{checked system.unreliable}} />
         </div>
+		
+		<div class="form-group">
+         <label title="How many dice can count as separate results">Multi-Result (Max Dice)</label>
+         <select name="system.multiResult">
+          {{#select system.multiResult}}
+          <option value="1">1 Die (Standard)</option>
+          <option value="2">2 Dice</option>
+          <option value="3">3 Dice</option>
+          {{/select}}
+         </select>
+        </div>
       {{/if}}
 
       <hr>
