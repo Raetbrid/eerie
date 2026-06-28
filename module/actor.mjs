@@ -19,6 +19,25 @@ export class eerieCharacterSheet extends ActorSheet {
     });
   }
 
+  async _render(force, options) {
+    const isCompact = game.user.getFlag("eerie", `compact-${this.actor.id}`) || false;
+    const isInvExpanded = game.user.getFlag("eerie", `compact-inventory-${this.actor.id}`) || false;
+
+    if (isCompact) {
+      this.position.width = 520;
+      this.position.height = isInvExpanded ? "auto" : 200;
+    } else {
+      this.position.width = 900;
+      this.position.height = 920;
+    }
+
+    await super._render(force, options);
+
+    if (isCompact && isInvExpanded) {
+      this.setPosition({ height: "auto" });
+    }
+  }
+
   _getHeaderButtons() {
     let buttons = super._getHeaderButtons();
     buttons.unshift({
@@ -40,6 +59,10 @@ export class eerieCharacterSheet extends ActorSheet {
     context.editMode = this.editMode;
     context.itemTrackerEnabled = game.settings.get("eerie", "itemTracker");
     context.initiativeEnabled = game.settings.get("eerie", "initiative");
+
+    context.compactMode = game.user.getFlag("eerie", `compact-${this.actor.id}`) || false;
+    context.compactInventoryExpanded = game.user.getFlag("eerie", `compact-inventory-${this.actor.id}`) || false;
+
     return context;
   }
 
@@ -64,6 +87,22 @@ export class eerieCharacterSheet extends ActorSheet {
 
     html.find('.toggle-edit-mode').click(() => {
       this.editMode = !this.editMode;
+      this.render(false);
+    });
+
+    html.find('.toggle-compact-mode').click(async ev => {
+      ev.preventDefault();
+      const current = game.user.getFlag("eerie", `compact-${this.actor.id}`) || false;
+      const target = !current;
+      await game.user.setFlag("eerie", `compact-${this.actor.id}`, target);
+      this.render(false);
+    });
+
+    html.find('.toggle-compact-inventory').click(async ev => {
+      ev.preventDefault();
+      const current = game.user.getFlag("eerie", `compact-inventory-${this.actor.id}`) || false;
+      const target = !current;
+      await game.user.setFlag("eerie", `compact-inventory-${this.actor.id}`, target);
       this.render(false);
     });
 
@@ -182,9 +221,11 @@ export class eerieCharacterSheet extends ActorSheet {
     let hasDisadv = charMods.disadvantage;
 
     // Initiative Disadvantage
-    if (initiativeActive && (stat === 'body' || stat === 'mind') && this.actor.system.initiative?.[`${stat}Lost`]) {
-      hasDisadv = true;
-      subHead += " [LOST INITIATIVE]";
+    if (initiativeActive && (stat === 'body' || stat === 'mind')) {
+      if (this.actor.system.initiative?.[`${stat}Lost`]) {
+        hasDisadv = true;
+        subHead += " [LOST INITIATIVE]";
+      }
     }
 
     // Weapon Logic
@@ -193,12 +234,12 @@ export class eerieCharacterSheet extends ActorSheet {
       if (weapon.system.versatile) hasMinus = false;
     }
 
-    // Advanced Roll Penalty (-1d logic)
+    // Advanced Roll Penalty
     if (advanced && advanced.penalty) {
       const isVersatile = weapon && weapon.system.versatile;
       const isUnreliable = weapon && weapon.system.unreliable;
       if (!isVersatile && (val === 2 || isUnreliable)) {
-        hasMinus = true; // Принудительный -1
+        hasMinus = true;
       }
     }
 

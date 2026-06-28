@@ -259,3 +259,198 @@
   filter: grayscale(1);
   transition: 0.3s;
 }
+
+
+.eerie.sheet.actor .custom-sheet.compact-sheet {
+  background-size: 100% 100% !important;
+  background-position: center;
+}
+
+.eerie.sheet.actor .compact-main-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  gap: 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.eerie.sheet.actor .compact-top-section {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  width: 100%;
+  align-items: center;
+}
+
+.eerie.sheet.actor .compact-portrait {
+  width: 130px !important;
+  height: 130px !important;
+  flex: 0 0 130px;
+  overflow: hidden;
+  border: 2px solid #333;
+  border-radius: 4px;
+}
+
+.eerie.sheet.actor .compact-portrait img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block;
+}
+
+.eerie.sheet.actor .compact-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  justify-content: center;
+}
+
+.eerie.sheet.actor .compact-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.eerie.sheet.actor .row-name .charname {
+  font-size: 20px !important;
+  text-align: left !important;
+  height: 28px !important;
+  line-height: 28px !important;
+  border-bottom: 1px solid rgba(0,0,0,0.15) !important;
+  width: 100% !important;
+  background: transparent !important;
+  font-family: 'TitleFont', sans-serif;
+}
+
+.eerie.sheet.actor .row-labels {
+  justify-content: space-between;
+}
+
+.eerie.sheet.actor .row-labels label {
+  font-family: 'TitleFont', sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  flex: 1;
+  text-align: center;
+}
+
+.eerie.sheet.actor .row-labels label.rollable-stat {
+  cursor: pointer;
+}
+
+.eerie.sheet.actor .row-indicators {
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.eerie.sheet.actor .row-indicators .stat-indicator {
+  width: 80px !important;
+  height: 40px !important;
+  cursor: pointer;
+  object-fit: cover;
+  flex: 1;
+}
+
+.eerie.sheet.actor .row-modifiers {
+  display: flex;
+  justify-content: space-between;
+  gap: 4px;
+}
+
+.eerie.sheet.actor .compact-mod-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.2) !important;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: bold;
+  cursor: pointer;
+  user-select: none;
+  text-align: center;
+}
+
+.eerie.sheet.actor .compact-mod-btn input[type="checkbox"] {
+  display: none !important;
+}
+
+.eerie.sheet.actor .compact-mod-btn.active {
+  background-color: #848482;
+  color: #fff;
+  border-color: #2a2a2a !important;
+}
+
+.eerie.sheet.actor .compact-tabs {
+  flex: 0 0 35px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 5px;
+}
+
+.eerie.sheet.actor .compact-tabs .toggle-compact-inventory.active {
+  color: #46385f;
+  text-shadow: 0 0 5px rgba(82, 55, 110, 0.5);
+}
+
+.eerie.sheet.actor .compact-inventory-section {
+  width: 100%;
+  border-top: 1px solid rgba(0, 0, 0, 0.15);
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.eerie.sheet.actor .compact-inventory-section .inventory-header {
+  width: 100%;
+  margin-bottom: 5px;
+  padding: 0 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.eerie.sheet.actor .compact-inventory-section .inventory-header h3 {
+  margin: 0;
+  font-family: 'TitleFont', sans-serif;
+  font-size: 18px;
+}
+
+.eerie.sheet.actor .compact-inventory-section .inventory-header .item-create {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.eerie.sheet.actor .compact-inv-list {
+  width: 100%;
+  padding-left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.eerie.sheet.actor .compact-inv-list .inventory-item {
+  width: 100%;
+  padding: 2px 8px;
+  box-sizing: border-box;
+}
+
+.eerie.sheet.actor .compact-inv-list .item-name {
+  font-size: 18px !important;
+}
+
+.eerie.sheet.actor .compact-inv-list .item-ticks {
+  font-size: 20px !important; /* 40 */
+  line-height: 1;
+}
+
+.eerie.sheet.actor:has(.compact-sheet) .eerie-header-generator {
+  display: none !important;
+}

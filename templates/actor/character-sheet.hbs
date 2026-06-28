@@ -1,4 +1,106 @@
-<form class="{{cssClass}} custom-sheet" autocomplete="off">
+<form class="{{cssClass}} custom-sheet {{#if compactMode}}compact-sheet{{/if}}" autocomplete="off">
+  {{#if compactMode}}
+  <div class="compact-main-wrapper">
+    <div class="compact-top-section">
+      <div class="compact-portrait">
+        <img src="{{actor.img}}" data-edit="img" title="Portrait" />
+      </div>
+      
+      <div class="compact-content">
+        <div class="compact-row row-name">
+          <input name="name" type="text" value="{{actor.name}}" placeholder="Name" class="charname" />
+        </div>
+
+        <div class="compact-row row-labels">
+          <label data-stat="will">{{localize "EERIE.Will"}}</label>
+          <label class="rollable-stat {{#if (and @root.initiativeEnabled system.initiative.bodyLost)}}lost-initiative{{/if}}" data-stat="body">{{localize "EERIE.Body"}}</label>
+          <label class="rollable-stat {{#if (and @root.initiativeEnabled system.initiative.mindLost)}}lost-initiative{{/if}}" data-stat="mind">{{localize "EERIE.Mind"}}</label>
+        </div>
+
+        <div class="compact-row row-indicators">
+          <img class="stat-indicator" src="systems/eerie/assets/stat_{{system.willTemp}}-{{system.will}}.webp" data-stat-temp="willTemp" />
+          <img class="stat-indicator" src="systems/eerie/assets/stat_{{system.bodyTemp}}-{{system.body}}.webp" data-stat-temp="bodyTemp" />
+          <img class="stat-indicator" src="systems/eerie/assets/stat_{{system.mindTemp}}-{{system.mind}}.webp" data-stat-temp="mindTemp" />
+        </div>
+
+        <div class="compact-row row-modifiers">
+          <label class="compact-mod-btn {{#if system.modifiers.plusOne}}active{{/if}}">
+            <input type="checkbox" name="system.modifiers.plusOne" {{checked system.modifiers.plusOne}} />
+            <span>+1</span>
+          </label>
+          <label class="compact-mod-btn {{#if system.modifiers.minusOne}}active{{/if}}">
+            <input type="checkbox" name="system.modifiers.minusOne" {{checked system.modifiers.minusOne}} />
+            <span>-1</span>
+          </label>
+          <label class="compact-mod-btn {{#if system.modifiers.increased}}active{{/if}}">
+            <input type="checkbox" name="system.modifiers.increased" {{checked system.modifiers.increased}} />
+            <span>▲▲▲</span>
+          </label>
+          <label class="compact-mod-btn {{#if system.modifiers.reduced}}active{{/if}}">
+            <input type="checkbox" name="system.modifiers.reduced" {{checked system.modifiers.reduced}} />
+            <span>▼▼▼</span>
+          </label>
+          <label class="compact-mod-btn {{#if system.modifiers.disadvantage}}active{{/if}}">
+            <input type="checkbox" name="system.modifiers.disadvantage" {{checked system.modifiers.disadvantage}} />
+            <span>Disadv</span>
+          </label>
+        </div>
+      </div>
+
+      <nav class="sheet-tabs tabs compact-tabs">
+        <a class="toggle-compact-mode lock-sidebar-btn" title="Toggle Compact Mode"><i class="fas fa-expand-alt"></i></a>
+        <a class="toggle-compact-inventory lock-sidebar-btn {{#if compactInventoryExpanded}}active{{/if}}" title="Toggle Inventory"><i class="fas fa-boxes"></i></a>
+      </nav>
+    </div>
+
+    {{#if compactInventoryExpanded}}
+    <div class="compact-inventory-section">
+      <div class="inventory-header">
+        <h3>{{localize "EERIE.Items"}}</h3>
+        <a class="item-create plus-btn" data-type="item" title="Add Item">+</a>
+      </div>
+      <div class="inventory-list compact-inv-list">
+        {{#each inventory}}
+        <div class="inventory-item item-wrapper" data-item-id="{{this._id}}">
+          
+          <div class="item-name-group" style="display: flex; align-items: center; flex: 1;">
+            {{#if (or (eq this.system.subType 'eerie') (ne this.system.weaponType 'none'))}}
+              <div class="item-name eerie-rollable" title="Click to Roll">{{this.name}}</div>
+            {{else}}
+              <div class="item-name">{{this.name}}</div>
+            {{/if}}
+
+            {{!-- ITEM TRACKER DOTS --}}
+            {{#if (and @root.itemTrackerEnabled (ne this.system.tracker.max 0))}}
+              <div class="item-ticks {{#if (gte this.system.tracker.value this.system.tracker.max)}}full{{/if}}" 
+                   title="Ticks: {{this.system.tracker.value}}/{{this.system.tracker.max}} (L-Click +, R-Click -)">
+                {{#times this.system.tracker.max}}
+                  {{#if (lt this ../system.tracker.value)}}●{{else}}○{{/if}}
+                {{/times}}
+              </div>
+            {{/if}}
+          </div>
+          
+          <a class="item-chat" title="Send to Chat"><i class="fas fa-comment-dots"></i></a>
+          
+          <div class="item-resource-controls">
+            {{#if (eq this.system.subType "count")}}<span class="resource-count-click" title="L-click +, R-click -">{{this.system.count.value}} / {{this.system.count.max}}</span>{{/if}}
+            {{#if (eq this.system.subType "dice")}}<span class="resource-dice-click" title="Roll Resource">{{this.system.dice.rank}}</span>{{/if}}
+            {{#if (eq this.system.subType "eerie")}}
+              <img class="eerie-resource-indicator" src="systems/eerie/assets/stat_{{this.system.eerie.value}}-3.webp" title="Resource: {{this.system.eerie.value}}" />
+            {{/if}}
+          </div>
+          <div class="item-controls">
+            <a class="item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+            <a class="item-delete" title="Delete">×</a>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+    {{/if}}
+  </div>
+  {{else}}
   <div class="sheet-main-wrapper">
     <div class="sheet-content">
       
@@ -50,13 +152,11 @@
               {{else}}<img class="stat-indicator" src="systems/eerie/assets/stat_{{system.willTemp}}-{{system.will}}.webp" data-stat-temp="willTemp" />{{/if}}
             </div>
             <div class="quick-stat">
-              {{!-- ПРОВЕРКА ИНИЦИАТИВЫ ДЛЯ BODY --}}
               <label class="rollable-stat {{#if (and @root.initiativeEnabled system.initiative.bodyLost)}}lost-initiative{{/if}}" data-stat="body">{{localize "EERIE.Body"}}</label>
               {{#if editMode}}<input type="number" name="system.body" value="{{system.body}}" min="0" max="3" />
               {{else}}<img class="stat-indicator" src="systems/eerie/assets/stat_{{system.bodyTemp}}-{{system.body}}.webp" data-stat-temp="bodyTemp" />{{/if}}
             </div>
             <div class="quick-stat">
-              {{!-- ПРОВЕРКА ИНИЦИАТИВЫ ДЛЯ MIND --}}
               <label class="rollable-stat {{#if (and @root.initiativeEnabled system.initiative.mindLost)}}lost-initiative{{/if}}" data-stat="mind">{{localize "EERIE.Mind"}}</label>
               {{#if editMode}}<input type="number" name="system.mind" value="{{system.mind}}" min="0" max="3" />
               {{else}}<img class="stat-indicator" src="systems/eerie/assets/stat_{{system.mindTemp}}-{{system.mind}}.webp" data-stat-temp="mindTemp" />{{/if}}
@@ -178,10 +278,12 @@
     </div>
     
     <nav class="sheet-tabs tabs" data-group="primary">
+      <a class="toggle-compact-mode lock-sidebar-btn" title="Toggle Compact Mode"><i class="fas fa-compress-alt"></i></a>
       <a class="toggle-edit-mode lock-sidebar-btn"><i class="fas fa-{{#if editMode}}lock-open{{else}}lock{{/if}}"></i></a>
       <a class="item vertical-tab" data-tab="page1">{{localize "EERIE.StatsTab"}}</a>
       <a class="item vertical-tab" data-tab="page2">{{localize "EERIE.InventoryTab"}}</a>
       <a class="item vertical-tab" data-tab="page3">{{localize "EERIE.NotesTab"}}</a>
     </nav>
   </div>
+  {{/if}}
 </form>
