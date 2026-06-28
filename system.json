@@ -85,5 +85,5 @@
   "secondaryTokenAttribute": "attributes.mp",
   
   "manifest": "https://raw.githubusercontent.com/Raetbrid/eerie/main/system.json",
-  "download": "https://github.com/Raetbrid/eerie/releases/download/v1.1.1/eerie.zip"
+  "download": "https://github.com/Raetbrid/eerie/releases/latest/download/eerie.zip"
 }
