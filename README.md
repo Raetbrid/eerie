@@ -8,7 +8,7 @@ Feel free to reach out with any questions, feedback, suggestions, or comments.
 ![Eerie](https://raw.githubusercontent.com/Raetbrid/eerie/main/images/preview.webp)
 
 ## You can read the core rules here:
-<p align="center">
+<p align="left">
   <a href="https://raetbrid.itch.io/eerie">
     <img src="https://img.shields.io/badge/Play_on_itch.io-fa5c5c?style=for-the-badge&logo=itch.io&logoColor=white">
   </a>
