@@ -51,7 +51,7 @@
   "EERIE.TraitDirtyTrick.Name": "Dirty Trick",
   "EERIE.TraitDirtyTrick.Desc": "When you take Body damage in melee, make a Body check. On any success, deal the same amount of damage to the attacker. On a 6, you also ignore the damage.",
   "EERIE.TraitEvasion.Name": "Evasion",
-  "EERIE.TraitEvasion.Desc": "When you are attacked, you may spend 1 Will to make a sudden dash. On any success, you completely avoid the damage.",
+  "EERIE.TraitEvasion.Desc": "When you are attacked, you may spend 1 Will to make a quick dodge. On any success, you completely avoid the damage.",
   "EERIE.TraitDash.Name": "Dash",
   "EERIE.TraitDash.Desc": "Actions involving movement on foot have increased effectiveness.",
   "EERIE.TraitUnbreakable.Name": "Unbreakable",

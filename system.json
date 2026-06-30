@@ -4,12 +4,20 @@
   "description": "My Little Horror RPG",
   "version": "1.1.1",
   "compatibility": {
-    "minimum": "12",
+    "minimum": "11",
     "verified": "13"
   },
-  "authors": [{ "name": "Ratbird" }],
+  "authors": [{ 
+	"name": "Ratbird",
+	"url": "https://github.com/Raetbrid"
+}],
   "esmodules": ["module/eerie.mjs"],
   "background": "systems/eerie/images/cover.webp",
+  "media": [{
+  	"type": "preview",
+  	"url": "https://raw.githubusercontent.com/Raetbrid/eerie/main//images/preview.webp",
+  	"caption": "Eerie"
+  }],
   "styles": ["styles/eerie.css"],
   
    "packs": [
