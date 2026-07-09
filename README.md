@@ -1,4 +1,3 @@
-@@ -8,11 +8,18 @@ Feel free to reach out with any questions, feedback, suggestions, or comments.
 ![Eerie](https://raw.githubusercontent.com/Raetbrid/eerie/main/images/preview.webp)
 
 ## You can read the core rules here:
@@ -15,6 +14,5 @@
   <br><br>
 </p>
 
-## You can check development updates here:
 ## Development updates here:
 [changelog](https://github.com/Raetbrid/eerie/blob/main/CHANGELOG.md)
