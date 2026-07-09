@@ -216,6 +216,11 @@
   "EERIE.SettingsInitiativeName": "Enable Initiative Rule",
   "EERIE.SettingsInitiativeHint": "A failed check grants disadvantage until the next successful check. RMB on Stat for reset",
   
+  "EERIE.SettingsEnergyTrackerName": "Energy Tracker",
+  "EERIE.SettingsEnergyTrackerHint": "Displays an Energy tracker on character sheets.",
+  "EERIE.SettingsEnergyDrainName": "Failures Drain Energy",
+  "EERIE.SettingsEnergyDrainHint": "Any failed roll automatically reduces Energy by 1.",
+  
   "EERIE.SettingsAdvRollName": "Advanced Item Roll",
   "EERIE.SettingsAdvRollHint": "Unlocks the advanced roll menu for inventory items.",
   "EERIE.WillReroll": "REROLL FOR WILL",
@@ -227,6 +232,8 @@
   "EERIE.AdvRollDepleteHint": "Completely depletes the item's resource, applying each rolled success.",
   "EERIE.AdvRollPrecise": "Precise",
   "EERIE.AdvRollPreciseHint": "Allows rerolls at the cost of Will.",
+    
+  "EERIE.EnergyName": "Energy",
   
   "EERIE.NotesHint": "Write your notes here..."
 }

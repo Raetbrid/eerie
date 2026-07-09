@@ -36,6 +36,86 @@ export class eerieCharacterSheet extends ActorSheet {
     if (isCompact && isInvExpanded) {
       this.setPosition({ height: "auto" });
     }
+
+    this._renderEnergyTracker();
+  }
+
+_renderEnergyTracker() {
+    const useEnergy = game.settings.get("eerie", "useEnergyTracker");
+    this.element.find(".energy-tracker-container").remove();
+    if (!useEnergy) return;
+
+    const isCompact = game.user.getFlag("eerie", `compact-${this.actor.id}`) || false;
+    const max = (parseInt(this.actor.system.will) || 0) + 6;
+    let val = this.actor.system.energy?.value ?? max;
+    if (val > max) val = max;
+    if (val < 0) val = 0;
+
+    let colorClass = "energy-normal";
+    if (val <= 3) colorClass = "energy-danger";
+    else if (val <= 5) colorClass = "energy-warning";
+
+    let trackerHtml = `<div class="energy-tracker-container ${colorClass} ${isCompact ? 'compact' : ''}">`;
+
+    if (isCompact) {
+      let debuff = "";
+      if (val === 0) debuff = "-1";
+      else if (val === 1) debuff = "dis";
+      else if (val === 2) debuff = "▼";
+
+      trackerHtml += `
+        <div class="energy-tracker-compact-val" title="Energy LMB+ RMB-)">
+          ${val}
+          ${debuff ? `<span class="energy-debuff-text">${debuff}</span>` : ""}
+        </div>
+      `;
+    } else {
+      trackerHtml += `<div class="energy-tracker-header">${game.i18n.localize("EERIE.EnergyName")}</div>`;
+      trackerHtml += `<div class="energy-dots-container" title="Energy (L-Click +, R-Click -)">`;
+      for (let i = 1; i <= max; i++) {
+        const filled = i <= val;
+        let label = "";
+        let labelActive = false;
+
+        if (i === 1) {
+          label = "-1";
+          labelActive = (val < 1);
+        } else if (i === 2) {
+          label = "dis";
+          labelActive = (val < 2);
+        } else if (i === 3) {
+          label = "▼▼▼";
+          labelActive = (val < 3);
+        }
+
+        const labelClass = labelActive ? "active" : "inactive";
+
+        trackerHtml += `
+          <div class="energy-dot-row">
+            <div class="energy-dot ${filled ? 'filled' : ''}"></div>
+            ${label ? `<span class="energy-dot-label ${labelClass}">${label}</span>` : ""}
+          </div>
+        `;
+      }
+      trackerHtml += `</div>`;
+    }
+
+    trackerHtml += `</div>`;
+
+    this.element.append(trackerHtml);
+
+    const tracker = this.element.find(".energy-tracker-container");
+    tracker.on("contextmenu", e => e.preventDefault());
+
+    tracker.mousedown(async ev => {
+      let newVal = this.actor.system.energy?.value ?? max;
+      if (ev.button === 0) {
+        newVal = Math.min(newVal + 1, max);
+      } else if (ev.button === 2) {
+        newVal = Math.max(newVal - 1, 0);
+      }
+      await this.actor.update({ "system.energy.value": newVal });
+    });
   }
 
   _getHeaderButtons() {
@@ -263,6 +343,18 @@ export class eerieCharacterSheet extends ActorSheet {
     const roll = await new Roll(`${n}d6${drop > 0 ? "dh" + drop : ""}`).evaluate();
     const activeResults = roll.terms[0].results.filter(d => d.active).map(d => d.result).sort((a, b) => b - a);
 
+    const finalResult = activeResults[0] || 0;
+
+    if (game.settings.get("eerie", "useEnergyTracker") && game.settings.get("eerie", "failsDrainEnergy")) {
+      if (finalResult >= 1 && finalResult <= 3) {
+        const maxEnergy = (parseInt(this.actor.system.will) || 0) + 6;
+        const currentEnergy = this.actor.system.energy?.value ?? maxEnergy;
+        if (currentEnergy > 0) {
+          await this.actor.update({ "system.energy.value": currentEnergy - 1 });
+        }
+      }
+    }
+
     // Multi-Result logic
     let maxResults = weapon ? parseInt(weapon.system.multiResult || 1) : 1;
     if (advanced && advanced.mode === "deplete") {
@@ -271,7 +363,7 @@ export class eerieCharacterSheet extends ActorSheet {
     }
 
     const successes = activeResults.filter(r => r >= 4);
-    const resultsToDisplay = (maxResults > 1 && successes.length > 1) ? successes.slice(0, maxResults) : [activeResults[0] || 0];
+    const resultsToDisplay = (maxResults > 1 && successes.length > 1) ? successes.slice(0, maxResults) : [finalResult];
 
     let resBlocksHtml = "";
     let bestResCl = "res-fail";
@@ -395,6 +487,16 @@ export class eerieCharacterSheet extends ActorSheet {
     const roll = await new Roll(`${diceCount}d6`).evaluate({ async: true });
     let results = roll.terms[0].results.map(r => r.result).sort((a, b) => b - a);
     let finalResult = (forceDisadvantage && results.length > 1) ? results[1] : results[0];
+
+    if (game.settings.get("eerie", "useEnergyTracker") && game.settings.get("eerie", "failsDrainEnergy")) {
+      if (finalResult >= 1 && finalResult <= 3) {
+        const maxEnergy = (parseInt(this.actor.system.will) || 0) + 6;
+        const currentEnergy = this.actor.system.energy?.value ?? maxEnergy;
+        if (currentEnergy > 0) {
+          await this.actor.update({ "system.energy.value": currentEnergy - 1 });
+        }
+      }
+    }
 
     if ((isExpendable ? finalResult <= 5 : finalResult <= 3) && val > 0) {
       await item.update({ "system.eerie.value": val - 1 });

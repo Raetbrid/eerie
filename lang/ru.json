@@ -216,6 +216,11 @@
   "EERIE.SettingsInitiativeName": "Правило инициативы",
   "EERIE.SettingsInitiativeHint": "Провал проверки создает помеху до следующей успешной проверки. ПКМ по Стату для сброса",
   
+  "EERIE.SettingsEnergyTrackerName": "Трекер энергии",
+  "EERIE.SettingsEnergyTrackerHint": "Отображает трекер энергии на листах персонажей.",
+  "EERIE.SettingsEnergyDrainName": "Провалы отнимают энергию",
+  "EERIE.SettingsEnergyDrainHint": "Любой провал автоматически уменьшает запас энергии на 1.",
+  
   "EERIE.SettingsAdvRollName": "Дополнительные опции использования предмета",
   "EERIE.SettingsAdvRollHint": "Включает расширенное меню броска при правом клике по названию предмета в инвентаре.",
   "EERIE.WillReroll": "ПЕРЕБРОС ЗА ВОЛЮ",
@@ -227,6 +232,8 @@
   "EERIE.AdvRollDepleteHint": "Полностью расходует ресурс предмета, используя каждый выпавший успех.",
   "EERIE.AdvRollPrecise": "Точность",
   "EERIE.AdvRollPreciseHint": "Позволяет переброс за счёт Воли.",
+  
+  "EERIE.EnergyName": "Энергия",
   
   "EERIE.NotesHint": "Прекрасное поле для заметок..."
 }

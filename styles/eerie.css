@@ -454,3 +454,135 @@
 .eerie.sheet.actor:has(.compact-sheet) .eerie-header-generator {
   display: none !important;
 }
+
+/* ENERGY TRACKER */
+
+.eerie.sheet.actor {
+  overflow: visible !important;
+}
+
+.energy-tracker-container {
+  position: absolute;
+  top: 80px;
+  right: -58px;
+  width: 52px;
+  background-image: url("/systems/eerie/assets/sheet-bg.webp");
+  background-repeat: round;
+  /*background-color: rgba(20, 20, 20, 0.95);*/
+  border: 1px solid #444;
+  border-left: none;
+  border-radius: 0 6px 6px 0;
+  padding: 10px 2px;
+  box-sizing: border-box;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.6);
+  user-select: none;
+  cursor: pointer;
+}
+
+.energy-tracker-container.compact {
+  top: 50px;
+  right: -36px;
+  width: 32px;
+  padding: 8px 2px;
+}
+
+.energy-tracker-header {
+  font-family: 'TitleFont', sans-serif;
+  font-size: 8px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  color: #000;
+  letter-spacing: 1.5px;
+  line-height: 1;
+}
+
+.energy-dots-container {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 8px;
+  align-items: center;
+  width: 100%;
+}
+
+.energy-dot-row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  position: relative;
+  justify-content: flex-start;
+  padding-left: 6px;
+  height: 16px;
+}
+
+.energy-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  border: 1.5px solid #777;
+  background: transparent;
+  transition: background-color 0.15s, border-color 0.15s;
+}
+
+.energy-dot-label {
+  font-size: 9px;
+  font-family: 'TitleFont', sans-serif;
+  margin-left: 6px;
+  white-space: nowrap;
+  pointer-events: none;
+  transition: color 0.15s;
+}
+
+.energy-dot-label.inactive {
+  color: rgba(0, 0, 0, 0.2);
+}
+
+.energy-dot-label.active {
+  color: #7D0000;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+  font-weight: bold;
+}
+
+.energy-normal .energy-dot.filled {
+  background-color: #444;
+  border-color: #444;
+  box-shadow: 0 0 4px rgba(0,0,0, 0.5);
+}
+
+.energy-warning .energy-dot.filled {
+  background-color: #E86100;
+  border-color: #444;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+}
+
+.energy-danger .energy-dot.filled {
+  background-color: #b71c1c;
+  border-color: #444;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+}
+
+.energy-tracker-compact-val {
+  font-family: 'TitleFont', sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.energy-normal .energy-tracker-compact-val { color: #444; }
+.energy-warning .energy-tracker-compact-val { color: #E86100; }
+.energy-danger .energy-tracker-compact-val { color: #7D0000; }
+
+.energy-debuff-text {
+  font-size: 12px;
+  color: #7D0000;
+  margin-top: 2px;
+  font-family: sans-serif;
+}

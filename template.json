@@ -25,6 +25,10 @@
         "plusOne": false,
         "increased": false,
         "reduced": false
+      },
+	  "energy": {
+        "value": 7,
+        "compact": false
       }
     },
     "npc": {

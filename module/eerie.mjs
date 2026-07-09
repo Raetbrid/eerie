@@ -22,6 +22,29 @@ Hooks.once('init', () => {
 	  default: true
 	});
 
+ game.settings.register("eerie", "useEnergyTracker", {
+    name: "EERIE.SettingsEnergyTrackerName",
+    hint: "EERIE.SettingsEnergyTrackerHint",
+    scope: "world",
+    config: true,
+    type: Boolean,
+    default: false,
+    onChange: () => {
+      Object.values(ui.windows).forEach(w => {
+        if (w instanceof ActorSheet) w.render();
+      });
+    }
+  });
+
+  game.settings.register("eerie", "failsDrainEnergy", {
+    name: "EERIE.SettingsEnergyDrainName",
+    hint: "EERIE.SettingsEnergyDrainHint",
+    scope: "world",
+    config: true,
+    type: Boolean,
+    default: true
+  });
+
   game.settings.register("eerie", "showPersonalityToChat", {
     name: "EERIE.SettingsPersonalityChatName",
     hint: "EERIE.SettingsPersonalityChatHint",
@@ -100,9 +123,7 @@ Hooks.on("renderChatMessage", (message, html, data) => {
     if (!actor || !item) return;
 
     if (actor.system.willTemp > 0) {
-      // Вычитаем волю
       await actor.update({"system.willTemp": actor.system.willTemp - 1});
-      // Совершаем тот же бросок
       const sheet = actor.sheet;
       sheet._rollStat(item.system.weaponType, item, { 
         mode: "precise", 
