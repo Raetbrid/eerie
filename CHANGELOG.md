@@ -1,3 +1,7 @@
+## v1.1.3
+
+* Added Energy Tracker.
+
 ## v1.1.2
 
 * Added new logo, readme and links.
