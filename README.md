@@ -1,3 +1,10 @@
+![Eerie](https://raw.githubusercontent.com/Raetbrid/eerie/main/images/cover.webp)
+
+This is my implementation of a my tabletop horror role-playing game.
+It was inspired by horror films, video games, and literature, and is designed to recreate that same kind of experience.
+
+Feel free to reach out with any questions, feedback, suggestions, or comments.
+
 ![Eerie](https://raw.githubusercontent.com/Raetbrid/eerie/main/images/preview.webp)
 
 ## You can read the core rules here:
